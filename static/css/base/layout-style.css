@@ -17,8 +17,21 @@ body {
     direction: rtl;
     font-family: 'Yekan';
     /*background-color: ;*/
+    background-image: linear-gradient(to bottom right, #0396FF, #ABDCFF);
+    height: 100vh;
 }
 
 #header {
     padding: 15px;
+}
+
+
+#footer {
+    background-color: #183348;
+    border-radius: 10px 10px 0 0;
+    color: white;
+}
+
+#footer a {
+    text-decoration: none;
 }
