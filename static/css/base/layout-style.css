@@ -1,0 +1,23 @@
+@font-face {
+    src: url("../../font/Yekan.ttf");
+    font-family: 'Yekan';
+}
+
+@font-face {
+    src: url("../../font/Bkoodak.ttf");
+    font-family: 'Bkoodak';
+}
+
+@font-face {
+    src: url("../../font/IranianSans.ttf");
+    font-family: 'IranianSans';
+}
+
+body {
+    direction: rtl;
+    font-family: 'Bkoodak';
+}
+
+.btn {
+    width: 200px;
+}

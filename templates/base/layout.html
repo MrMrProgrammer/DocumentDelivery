@@ -1,0 +1,39 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <link rel="stylesheet" href="{% static 'css/base/Bootstrap.css' %}"/>
+        <link rel="stylesheet" href="{% static 'css/base/layout-style.css' %}"/>
+
+        {% block header-link %}{% endblock %}
+
+        <title>
+            {% block page-title %}واسپاری تجار ایرانیان{% endblock %}
+        </title>
+
+    </head>
+
+    <body>
+        <div class="container-fluid text-right">
+            <div class="row">
+                <div class="col-12">
+                    <div id="header">
+                        <h1>واسپاری تجار ایرانیان</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+
+            {% block mian %}{% endblock %}
+
+        </div>
+
+    </body>
+</html>
