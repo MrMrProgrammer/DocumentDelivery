@@ -15,9 +15,10 @@
 
 body {
     direction: rtl;
-    font-family: 'Bkoodak';
+    font-family: 'Yekan';
+    /*background-color: ;*/
 }
 
-.btn {
-    width: 200px;
+#header {
+    padding: 15px;
 }
