@@ -1,14 +1,36 @@
 {% extends 'base/layout.html' %}
+{% load static %}
 
-{% block page-title %}{% endblock %}
+{% block page-title %}افزودن فروشگاه{% endblock %}
 
-{% block header-link %}{% endblock %}
+{% block header-link %}
+    <link rel="stylesheet" href="{% static 'css/Store/add-order.css' %}">
+{% endblock %}
 
 {% block mian %}
 
-    <form action="" method="post">
-        {{ register_form }}
-        <button type="submit">ذخیره فروشگاه</button>
-    </form>
+    <h1 class="text-center">افزودن فروشگاه</h1>
+
+    <div class="row">
+        <div class="col-md-3"></div>
+
+        <div class="col-md-6 text-center">
+            <br>
+            <form action="{% url 'add-store' %}" method="post">
+                {% csrf_token %}
+
+                {{ register_form.store_name }}
+
+
+                <br/>
+
+                <button class="btn btn-success" type="submit">ذخیره فروشگاه</button>
+
+            </form>
+
+        </div>
+
+        <div class="col-md-3"></div>
+    </div>
 
 {% endblock %}

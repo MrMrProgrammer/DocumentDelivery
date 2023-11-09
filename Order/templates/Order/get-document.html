@@ -1,10 +1,9 @@
 {% extends 'base/layout.html' %}
 
-
-
 {% block page-title %}ثبت مدارک{% endblock %}
 
 {% block mian %}
+
     <div class="row text-center">
         <div class="col-md-3"></div>
 
@@ -15,31 +14,30 @@
 
                 <br/>
 
-                <input type="text" class="form-control" placeholder="نام فروشگاه"/>
+                {{ register_form.store_name }}
+
 
                 <br/>
 
-                <input type="number" class="form-control" placeholder="شماره سفارش"/>
+                {{ register_form.order_number }}
 
                 <br/>
 
                 <div class="row">
-                    <div class="col-5 text-center">
-                        <h4>روش دریافت :</h4>
+                    <div class="col-4 text-right">
+                        <h5>روش دریافت:</h5>
                     </div>
-                    <div class="col-7 text-right">
-                        <input type="radio" name="a"/><label>&#160;پست</label>
-                        <br/>
-                        <input type="radio" name="a"/><label>&#160;Tipax</label>
-                        <br/>
-                        <input type="radio" name="a"/><label>&#160;پیک</label>
+                    <div class="col-8 text-right">
+
+                        {{ register_form.shipping_method }}
+
                     </div>
 
                 </div>
 
                 <br/>
 
-                <textarea class="form-control">توضیحات</textarea>
+                {{ register_form.description }}
 
                 <br/>
 
