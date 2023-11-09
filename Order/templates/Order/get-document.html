@@ -1,6 +1,11 @@
 {% extends 'base/layout.html' %}
+{% load static %}
 
 {% block page-title %}ثبت مدارک{% endblock %}
+
+{% block header-link %}
+    <link rel="stylesheet" href="{% static 'css/get-document.css' %}">
+{% endblock %}
 
 {% block mian %}
 
@@ -12,7 +17,23 @@
 
             <form method="post" action="#">
 
-                <br/>
+                <div class="row">
+                    <div id="search-btn" class="col-12 text-center">
+                        <div class="dropdown text-center">
+                            <button id="myDropdownBtn" onclick="dropfunc()" class="dropbtn">جستجو</button>
+
+                            <div id="myDropdown" class="dropdown-content">
+
+                                <input class="shadow-sm" type="text" placeholder="جستجو" id="myInput" onkeyup="filterFunction()">
+
+                                {% for course in courses %}
+                                    <a href="#" >{{ course.lesson }} - {{ course.teacher }}</a>
+                                {% endfor %}
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
                 {{ register_form.store_name }}
 
@@ -48,7 +69,7 @@
                     <br/>
                     <br/>
                     <div class="col-md-6">
-                        <button type="submit" class="btn btn-primary">ذخیره و ایجاد دیگر</button>
+                        <button type="submit" class="btn btn-primary">ذخیره و ایجاد دیگری</button>
                     </div>
 
                 </div>
@@ -60,4 +81,46 @@
         <div class="col-md-3"></div>
 
     </div>
+
+    <script>
+
+        function dropfunc() {
+            document.getElementById("myDropdown").classList.toggle("show");
+        }
+
+        let myDropdown = document.getElementById("myDropdown");
+        let myDropdownBtn = document.getElementById("myDropdownBtn");
+        document.addEventListener('click', function (e) {
+
+            if (!myDropdown.contains(e.target) && !myDropdownBtn.contains(e.target)) {
+                if (myDropdown.classList.contains('show')) {
+                    e.preventDefault();
+                    myDropdown.classList.remove('show');
+                }
+            }
+        });
+
+        function filterFunction() {
+            var input, filter, ul, li, a, i;
+
+            input = document.getElementById("myInput");
+
+            filter = input.value.toUpperCase();
+
+            div = document.getElementById("myDropdown");
+
+            a = div.getElementsByTagName("a");
+
+            for (i = 0; i < a.length; i++) {
+                txtValue = a[i].textContent || a[i].innerText;
+
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    a[i].style.display = "";
+                } else {
+                    a[i].style.display = "none";
+                }
+            }
+        }
+    </script>
+
 {% endblock %}

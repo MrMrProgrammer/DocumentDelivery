@@ -8,13 +8,14 @@ from .models import Order
 #         fields = '__all__'
 
 class OrderForm(forms.Form):
-
     store_name = forms.CharField(
         label='نام فروشگاه',
         widget=forms.TextInput(attrs=
         {
             'class': 'form-control',
-            'placeholder': 'نام فروشگاه'
+            'placeholder': 'نام فروشگاه',
+            'onclick': "dropfunc()",
+            'id': 'myDropdownBtn',
         }),
     )
 
