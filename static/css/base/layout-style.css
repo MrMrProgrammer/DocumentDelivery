@@ -13,26 +13,64 @@
     font-family: 'IranianSans';
 }
 
+#header {
+    background-color: #183348;
+    border-radius: 0 0 10px 10px;
+}
+
 body {
     direction: rtl;
     font-family: 'Yekan';
     /*background-color: ;*/
-    background-image: linear-gradient(to bottom right, #0396FF, #ABDCFF);
-    height: 100vh;
+    /*background-image: linear-gradient(to bottom right, #0396FF, #ABDCFF);*/
+    /*height: 100vh;*/
 }
 
 #header {
     padding: 15px;
 }
 
-
-#footer {
+.navbar {
     background-color: #183348;
-    border-radius: 10px 10px 0 0;
+    border-radius: 0 0 10px 10px;
+}
+
+.navbar-brand {
+    font-size: 25px;
+}
+
+.navbar-nav {
+    padding: 0;
+}
+
+.navbar-dark .navbar-nav .nav-link {
     color: white;
 }
 
-#footer a {
+.nav-link {
+    text-align: center;
+}
+
+
+
+form {
+    background-color: #9fcdff;
+    padding: 15px;
+    border-radius: 15px;
+    border: 1px solid gainsboro;
+    box-shadow: 2px 2px 2px rgba(175, 175, 175, 0.9);
+}
+
+
+footer {
+    background-color: #183348;
+    border-radius: 10px 10px 0 0;
+    color: white;
+    padding: 15px;
+    font-size: 20px;
+}
+
+footer a {
     text-decoration: none;
 }
 

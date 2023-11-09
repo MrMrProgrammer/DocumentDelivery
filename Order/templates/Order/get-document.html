@@ -15,12 +15,15 @@
         <div class="col-md-6">
             <h1>ثبت مدارک</h1>
 
-            <form method="post" action="#">
+            <br/>
+
+            <form method="post" action="{% url 'get-doc' %}">
+                {% csrf_token %}
 
                 <div class="row">
                     <div id="search-btn" class="col-12 text-center">
                         <div class="dropdown text-center">
-                            <button id="myDropdownBtn" onclick="dropfunc()" class="dropbtn">جستجو</button>
+                            <a id="myDropdownBtn" onclick="dropfunc()" class="dropbtn">جستجو</a>
 
                             <div id="myDropdown" class="dropdown-content">
 
@@ -34,6 +37,8 @@
                         </div>
                     </div>
                 </div>
+
+                <br/>
 
                 {{ register_form.store_name }}
 

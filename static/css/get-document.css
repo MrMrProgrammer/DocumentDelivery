@@ -20,11 +20,14 @@
     font-size: 16px;
     border: none;
     direction: rtl;
+    display: block;
+    width: 100%;
 }
 
 .dropbtn:hover, .dropbtn:focus {
     /* background-color: #3e8e41; */
     background-color: #337ab7;
+    background-color: white;
 }
 
 #myInput {
@@ -48,11 +51,14 @@
 }
 
 .dropdown {
-    direction: rtl;
-    position: relative;
-    display: inline-block;
-    margin: 8% 0 8% 0;
+    /*direction: rtl;*/
+    /*position: relative;*/
+    /*display: inline-block;*/
+    /*margin: 8% 0 8% 0;*/
+    width: 100%;
+
 }
+
 
 .dropdown-content {
     display: none;
@@ -83,7 +89,7 @@
 }
 
 .dropdown a:hover {
-    background-color: #ddd;
+    background-color: darkgreen;
 }
 
 .show {
@@ -93,10 +99,11 @@
 }
 
 #search-btn{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
+    /*display: flex;*/
+    /*justify-content: center;*/
+    /*align-items: center;*/
+    /*position: relative;*/
+    width: 100%;
 }
 #search-btn .dropdown{
     position: initial;
@@ -104,7 +111,7 @@
 #myDropdown{
     right: 15px;
     left: 15px;
-    margin-top: 12px;
+    /*margin-top: 12px;*/
 }
 div#myDropdown a:not(:last-child) {
     border-bottom: 1px solid #d4d4d4;
