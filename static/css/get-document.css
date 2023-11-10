@@ -113,6 +113,7 @@
     left: 15px;
     /*margin-top: 12px;*/
 }
+
 div#myDropdown a:not(:last-child) {
     border-bottom: 1px solid #d4d4d4;
 }
