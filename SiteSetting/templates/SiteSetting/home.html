@@ -1,0 +1,21 @@
+{% extends 'base/layout.html' %}
+
+{% block header-link %}{% endblock %}
+
+{% block page-title %}{% endblock %}
+
+{% block mian %}
+
+    <br/>
+
+    <div class="row">
+
+        <div class="col-12 text-right">
+            <h2>سلام {% if request.user.is_active %}آقای{% elif not request.user.is_active %}خانم{% endif %} {{ request.user.last_name }}</h2>
+            <h3>امروز، {{ date }}</h3>
+        </div>
+
+    </div>
+
+{% endblock %}
+

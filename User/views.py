@@ -43,7 +43,7 @@ class LoginView(View):
                 if is_password_correct:
                     login(request, user)
 
-                    return redirect('show-store')
+                    return redirect('home')
 
                 else:
                     login_form.add_error('password', 'ایمیل یا رمز عبور اشتباه است (رمز عبور)')

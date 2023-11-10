@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'Store',
     'Order',
     'User',
+    'SiteSetting',
 ]
 
 MIDDLEWARE = [
@@ -54,7 +55,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'DocumentDelivery.urls'
-LOGIN_URL = '/login'
+LOGIN_URL = '/User/login'
 
 TEMPLATES = [
     {
