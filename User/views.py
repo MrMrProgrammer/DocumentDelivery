@@ -4,8 +4,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout
 from django.views import View
 from .forms import LoginForm
-from django.contrib.auth.models import AbstractUser
 from django.http import HttpRequest
+from django.contrib.auth.models import User
 
 
 class LogoutView(View):
@@ -33,9 +33,11 @@ class LoginView(View):
 
             username = login_form.cleaned_data.get('username')
             password = login_form.cleaned_data.get('password')
-            user: AbstractUser = AbstractUser.objects.filter(email__iexact=username).first()
+
+            user: User = User.objects.filter(username__iexact=username).first()
 
             if user is not None:
+
                 is_password_correct = user.check_password(password)
 
                 if is_password_correct:
