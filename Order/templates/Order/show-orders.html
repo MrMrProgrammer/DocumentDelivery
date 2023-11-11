@@ -1,0 +1,28 @@
+{% extends 'base/layout.html' %}
+
+{% block page-title %}مشاهده مدارک{% endblock %}
+
+{% block header-link %}{% endblock %}
+
+{% block mian %}
+
+    <div class="row">
+        <div class="col-md-3"></div>
+
+        <div class="col-md-6 text-center">
+            <h1>مدارک ثبت شده</h1>
+
+            <br/>
+
+            {% for order in orders %}
+                {{ order.store }} / {{ order.time }} / {{ order.order_number }}
+                <br/>
+                <br/>
+            {% endfor %}
+
+        </div>
+
+        <div class="col-md-3"></div>
+    </div>
+
+{% endblock %}

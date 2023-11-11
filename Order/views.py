@@ -46,3 +46,13 @@ class GetDocument(View):
         # }
         #
         # return render(request, 'Store/add-store.html', context)
+
+
+def show_order(request):
+    orders = Order.objects.all()
+
+    context = {
+        'orders': orders
+    }
+
+    return render(request, 'Order/show-orders.html', context)

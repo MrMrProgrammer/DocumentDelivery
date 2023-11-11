@@ -1,21 +1,69 @@
 {% extends 'base/layout.html' %}
+{% load static %}
 
-{% block header-link %}{% endblock %}
+{% block header-link %}
+    <link rel="stylesheet" href="{% static 'css/home-style.css' %}"/>
+{% endblock %}
 
 {% block page-title %}{% endblock %}
 
 {% block mian %}
 
     <br/>
+    <br/>
 
     <div class="row">
 
-        <div class="col-12 text-right">
-            <h2>سلام {% if request.user.is_active %}آقای{% elif not request.user.is_active %}خانم{% endif %} {{ request.user.last_name }}</h2>
-            <h3>امروز، {{ date|date:"l" }} {{ date|date:"d" }} {{ date|date:"m" }}</h3>
+        <div class="col-md-8 text-right">
+
+            <h2>سلام {% if request.user.is_staff %}آقای{% else %}خانم{% endif %} {{ request.user.last_name }}</h2>
+
+            <br/>
+
+            <h4>امروز، <span class="text-success">{{ date|date:'l' }}</span> (<span dir="rtl">{{ today_date }}</span>)</h4>
+
+            <br/>
+            <br/>
+
         </div>
 
+        <div class="col-md-4 text-center action_box">
+
+            <br/>
+
+            <h3>فعالیت ها</h3>
+
+            <br/>
+
+            <div class="row">
+                <div class="col-12">
+                    <a href="{% url 'get-doc' %}" class="btn btn-success">افزودن مدارک</a>
+                </div>
+            </div>
+
+            <br/>
+            <div class="row">
+                <div class="col-12">
+                    <a href="{% url 'get-doc' %}" class="btn btn-outline-primary">مشاهده لیست مدارک</a>
+                </div>
+            </div>
+
+            <br/>
+            <div class="row">
+                <div class="col-12">
+                    <a href="{% url 'add-store' %}" class="btn btn-outline-success">افزودن فروشگاه</a>
+                </div>
+            </div>
+
+            <br/>
+            <div class="row">
+                <div class="col-12">
+                    <a href="{% url 'show-store' %}" class="btn btn-outline-secondary">مشاهده لیست فروشگاه ها</a>
+                </div>
+            </div>
+
+            <br/>
+        </div>
     </div>
 
 {% endblock %}
-

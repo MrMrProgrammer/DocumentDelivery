@@ -1,0 +1,10 @@
+.btn {
+    width: 70%;
+}
+
+.action_box {
+    background-color: rgba(241, 241, 241, 0.89);
+    padding: 10px;
+    border-radius: 10px;
+    border:1px solid gainsboro ;
+}
