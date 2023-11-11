@@ -48,6 +48,7 @@ class GetDocument(View):
         # return render(request, 'Store/add-store.html', context)
 
 
+@login_required
 def show_order(request):
     orders = Order.objects.all()
 
