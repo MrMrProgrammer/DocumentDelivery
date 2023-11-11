@@ -1,0 +1,78 @@
+#remove-icon {
+    width: 35px;
+}
+
+#search-btn {
+    width: 100%;
+}
+
+#remove-btn {
+    border: none;
+    background-color: #9fcdff;
+}
+
+/*=========================================================*/
+
+#myDropdown{
+    right: 15px;
+    left: 15px;
+    margin-top: 10px;
+}
+div#myDropdown a:not(:last-child) {
+    border-bottom: 1px solid #d4d4d4;
+}
+div#myDropdown a {
+    color: black !important;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-align: right;
+}
+
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    margin-left: auto;
+    background-color: #f6f6f6;
+    overflow: auto;
+    border: 1px solid #ddd;
+    z-index: 1;
+    height: 200px;
+    overflow-y: scroll;
+    border: 1px solid rgba(51, 149, 255, 0.95);
+    border-radius: 5px;
+}
+
+
+.dropdown-content a {
+    color: black;
+    padding: 6px 16px;
+    text-decoration: none;
+    display: block;
+
+    width: max-content;
+    background-color: rgba(248, 248, 248, 0.96);
+
+}
+
+#myInput {
+    box-sizing: border-box;
+    background-repeat: no-repeat;
+    font-size: 16px;
+    padding: 14px 20px 12px 45px;
+    border: none;
+    border-bottom: 1px solid #ddd;
+    background-color: white;
+
+}
+
+#myInput {
+    /*margin-top: 5px;*/
+    width: 100%;
+}
+
+#myInput:focus {
+    width: 100%;
+}

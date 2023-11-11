@@ -14,8 +14,10 @@ class OrderForm(forms.Form):
         {
             'class': 'form-control',
             'placeholder': 'نام فروشگاه',
-            'onclick': "dropfunc()",
-            'id': 'myDropdownBtn',
+            'id': 'store_id_input',
+            'readonly': 'readonly',
+            'type': 'hidden',
+            'required':'required',
         }),
     )
 

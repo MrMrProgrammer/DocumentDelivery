@@ -4,17 +4,22 @@ from .forms import OrderForm
 from .models import Order
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
+from Store.models import Store
 
 
 @method_decorator(login_required, name='dispatch')
 class GetDocument(View):
     def get(self, request):
+        stores = Store.objects.all()
+
         register_form = OrderForm()
+
         context = {
-            'register_form': register_form
+            'register_form': register_form,
+            'stores': stores,
         }
 
-        return render(request, 'Order/get-document.html', context)
+        return render(request, 'Order/add-order.html', context)
 
     def post(self, request):
         register_form = OrderForm(request.POST)
@@ -41,11 +46,11 @@ class GetDocument(View):
 
             return redirect('show-store')
 
-        # context = {
-        #     'register_form': register_form,
-        # }
-        #
-        # return render(request, 'Store/add-store.html', context)
+        context = {
+            'register_form': register_form,
+        }
+
+        return render(request, 'Order/add-order.html', context)
 
 
 @login_required

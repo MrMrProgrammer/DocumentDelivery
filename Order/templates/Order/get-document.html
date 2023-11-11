@@ -21,26 +21,27 @@
                 {% csrf_token %}
 
                 <div class="row">
-                    <div id="search-btn" class="col-12 text-center">
-                        <div class="dropdown text-center">
-                            <a id="myDropdownBtn" onclick="dropfunc()" class="dropbtn">جستجو</a>
+                    <div class="col-md-12">
 
-                            <div id="myDropdown" class="dropdown-content">
+                        {{ register_form.store_name }}
 
-                                <input class="shadow-sm" type="text" placeholder="جستجو" id="myInput" onkeyup="filterFunction()">
+                        <br/>
 
-                                {% for course in courses %}
-                                    <a href="#" >{{ course.lesson }} - {{ course.teacher }}</a>
-                                {% endfor %}
-
-                            </div>
+{#                        <button id="myDropdownBtn" class="btn btn-primary" onclick="dropfunc()" style="width: 100%">جستجو نام فروشگاه</button>#}
+{##}
+                        <div id="myDropdown" class="dropdown-content">
+                            <input class="shadow-sm" type="text" placeholder="جستجو" id="myInput" onkeyup="filterFunction()" style="display: block">
+                            {% for course in courses %}
+                                <a href="#" >{{ course.lesson }} - {{ course.teacher }}</a>
+                            {% endfor %}
                         </div>
+
+
                     </div>
+
                 </div>
 
-                <br/>
 
-                {{ register_form.store_name }}
 
 
                 <br/>
@@ -58,7 +59,6 @@
                         {{ register_form.shipping_method }}
 
                     </div>
-
                 </div>
 
                 <br/>
