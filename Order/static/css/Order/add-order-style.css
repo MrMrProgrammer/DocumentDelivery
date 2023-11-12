@@ -15,6 +15,14 @@
     width: 80%;
 }
 
+#sub-btn {
+    display: none;
+}
+
+#sub-btn-again {
+    display: none;
+}
+
 /*=========================================================*/
 
 #myDropdown{

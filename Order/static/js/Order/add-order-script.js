@@ -35,12 +35,25 @@ function add_to_input(store_name, store_id) {
     console.log(store_name)
     document.getElementById('store_id_input').value = store_id;
     document.getElementById('fake_store_id_input').value = store_name;
+
     document.getElementById('myDropdown').style.display = 'none';
+
+    document.getElementById('sub-btn').style.display = 'inline-block';
+    document.getElementById('sub-btn-again').style.display = 'inline-block';
+
+    document.getElementById('unactive-sub-btn').style.display = 'none';
+    document.getElementById('unactive-sub-btn-again').style.display = 'none';
 }
 
 function remove_from_input() {
     document.getElementById('store_id_input').value = '';
     document.getElementById('fake_store_id_input').value = '';
+
+    document.getElementById('unactive-sub-btn').style.display = 'inline-block';
+    document.getElementById('unactive-sub-btn-again').style.display = 'inline-block';
+
+    document.getElementById('sub-btn').style.display = 'none';
+    document.getElementById('sub-btn-again').style.display = 'none';
 }
 
 //==============================================================
