@@ -43,6 +43,7 @@ class OrderForm(forms.Form):
 
     description = forms.CharField(
         label='توضیحات',
+        required=False,
         widget=forms.Textarea(attrs=
         {
             'class': 'form-control',

@@ -44,7 +44,7 @@ class GetDocument(View):
 
             new_doc.save()
 
-            return redirect('show-store')
+            return redirect('show-orders')
 
         context = {
             'register_form': register_form,
