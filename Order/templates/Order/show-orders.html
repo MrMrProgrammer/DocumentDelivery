@@ -1,13 +1,20 @@
 {% extends 'base/layout.html' %}
+{% load static %}
 
 {% block page-title %}مشاهده مدارک{% endblock %}
 
-{% block header-link %}{% endblock %}
+{% block header-link %}
+    <link rel="stylesheet" href="{% static 'css/Order/show-orders.css' %}"/>
+{% endblock %}
 
 {% block mian %}
 
     <div class="row">
-        <div class="col-md-3"></div>
+        <div class="col-md-3 text-center">
+            <div style="background-color: red">
+                filter
+            </div>
+        </div>
 
         <div class="col-md-6 text-center">
             <h1>مدارک ثبت شده</h1>
@@ -22,7 +29,44 @@
 
         </div>
 
-        <div class="col-md-3"></div>
+        <div class="col-md-3 text-center action_box">
+
+            <div class="row">
+                <div class="col-12">
+                    <br/>
+                    <h3>فعالیت ها</h3>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12">
+                    <br/>
+                    <a href="{% url 'get-doc' %}" class="btn btn-success">افزودن مدارک</a>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12">
+                    <br/>
+                    <a href="{% url 'show-orders' %}" class="btn btn-outline-primary">مشاهده لیست مدارک</a>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12">
+                    <br/>
+                    <a href="{% url 'add-store' %}" class="btn btn-outline-success">افزودن فروشگاه</a>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12">
+                    <br/>
+                    <a href="{% url 'show-store' %}" class="btn btn-outline-secondary">مشاهده لیست فروشگاه ها</a>
+                </div>
+            </div>
+
+        </div>
     </div>
 
 {% endblock %}
