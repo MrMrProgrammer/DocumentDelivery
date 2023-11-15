@@ -12,9 +12,11 @@
 
     <div class="row">
 
+        <div class="col-md-1"></div>
+
         <div class="col-md-2"></div>
 
-        <div class="col-md-8 text-center">
+        <div class="col-md-6 text-center">
 
             <div class="row">
 
@@ -112,7 +114,53 @@
 
         </div>
 
-        <div class="col-md-2"></div>
+        <div class="col-md-2 text-center">
+
+            <br/>
+            <br/>
+            <br/>
+
+            <div class="action_box">
+
+                <div class="row text-center">
+                    <div class="col-12">
+                        <br/>
+                        <h3>فعالیت ها</h3>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <br/>
+                        <a href="{% url 'get-doc' %}" class="btn btn-success">افزودن مدارک</a>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <br/>
+                        <a href="{% url 'show-orders' %}" class="btn btn-outline-primary">مشاهده لیست مدارک</a>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <br/>
+                        <a href="{% url 'add-store' %}" class="btn btn-outline-success">افزودن فروشگاه</a>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <br/>
+                        <a href="{% url 'show-store' %}" class="btn btn-outline-secondary">مشاهده لیست فروشگاه ها</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-md-1">
 
     </div>
 
