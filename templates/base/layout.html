@@ -88,11 +88,60 @@
 {#        </div>#}
 
 
-        <div class="container">
+        <div class="container-fluid">
 
             <br/>
 
-            {% block mian %}{% endblock %}
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-2"></div>
+                <div class="col-md-6">
+                    {% block mian %}{% endblock %}
+                </div>
+                <div class="col-md-2 text-center">
+                    <div class="action_box">
+
+                        <br/>
+            
+                        <h3>فعالیت ها</h3>
+            
+                        <br/>
+            
+                        <div class="row">
+                            <div class="col-12">
+                                <a href="{% url 'add-order' %}" class="btn btn-success">افزودن مدارک</a>
+                            </div>
+                        </div>
+            
+                        <br/>
+                        <div class="row">
+                            <div class="col-12">
+                                <a href="{% url 'show-orders' %}" class="btn btn-outline-primary">مشاهده لیست مدارک</a>
+                            </div>
+                        </div>
+            
+                        <br/>
+                        <div class="row">
+                            <div class="col-12">
+                                <a href="{% url 'add-store' %}" class="btn btn-outline-success">افزودن فروشگاه</a>
+                            </div>
+                        </div>
+            
+                        <br/>
+                        <div class="row">
+                            <div class="col-12">
+                                <a href="{% url 'show-store' %}" class="btn btn-outline-secondary">مشاهده لیست فروشگاه ها</a>
+                            </div>
+                        </div>
+            
+                        <br/>
+                    </div>
+
+                </div>
+
+                <div class="col-md-1"></div>
+
+            </div>
 
         </div>
 
