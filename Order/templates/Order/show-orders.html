@@ -57,7 +57,7 @@
                                             <td>-</td>
                                         {% endif %}
                                         <td>
-                                            <a>
+                                            <a href="{% url 'update_order' order_id=order.id %}">
                                                 <img class="icon" src="{% static 'Order/image/edit-icon.png' %}" />
                                             </a>
                                         </td>

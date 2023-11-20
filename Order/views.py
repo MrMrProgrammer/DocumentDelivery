@@ -6,6 +6,7 @@ from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from Store.models import Store
 from django.http import HttpRequest, HttpResponse
+from .forms import UpdateOrderForm
 
 
 def list_cleaner(input_list):
@@ -108,9 +109,36 @@ def show_order(request):
 
     return render(request, 'Order/show-orders.html', context)
 
+class UpdateOrderView(View):
+    def get(self, request: HttpRequest, order_id):
+        current_order: Order = Order.objects.filter(id=order_id).first()
 
-def update_order(request, order_id):
-    pass
+        print(current_order.order_number)
+
+        edit_form = UpdateOrderForm(instance=current_order)
+
+        context = {
+            'edit_form': edit_form,
+        }
+
+        return render(request, 'Order/update-order.html', context)
+
+    # def post(self, request: HttpRequest, order_id):
+    #
+    #     current_food: FoodsModel = FoodsModel.objects.filter(id=food_id).first()
+    #
+    #     edit_form = UpdateFoodForm(request.POST, request.FILES, instance=current_food)
+    #
+    #     if edit_form.is_valid():
+    #         edit_form.save(commit=True)
+    #
+    #         return redirect('PerMomFoodsList')
+    #
+    #     context = {
+    #         'edit_form': edit_form,
+    #     }
+    #
+    #     return render(request, 'Food/UpdateFood.html', context)
 
 
 def delete_order(request: HttpRequest, order_id):

@@ -1,8 +1,8 @@
 from django import forms
 from .models import Order
 
-class OrderForm(forms.Form):
 
+class OrderForm(forms.Form):
     store_name = forms.CharField(
         label='نام فروشگاه',
         widget=forms.TextInput(attrs=
@@ -12,8 +12,8 @@ class OrderForm(forms.Form):
             'id': 'store_id_input',
             'readonly': 'readonly',
             'type': 'hidden',
-            'required':'required',
-            'rows':3,
+            'required': 'required',
+            'rows': 3,
         }),
     )
 
@@ -49,17 +49,15 @@ class OrderForm(forms.Form):
     #     }),
     # )
 
-class UpdateOrderForm(forms.ModelForm):
-    is_active = forms.BooleanField(required=False, label='فعال / غیرفعال')
-    food_photo = forms.ImageField(required=False, widget=forms.FileInput)
 
+class UpdateOrderForm(forms.ModelForm):
     class Meta:
         model = Order
-        fields = ['food_photo', 'food_name', 'food_price', 'food_recipe', 'is_active']
+        fields = ['store', 'order_number', 'shipping_method', 'document_defects']
 
         widgets = {
 
-            'food_name': forms.TextInput(attrs={
+            'store': forms.NumberInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'نام غذا'
             }),
@@ -77,12 +75,4 @@ class UpdateOrderForm(forms.ModelForm):
                 'placeholder': 'عکس غذا',
 
             }),
-        }
-
-        labels = {
-            'food_name': 'نام غذا',
-            'food_price': 'قیمت',
-            'food_recipe': 'دستورپخت',
-            'is_active': 'فعال / غیرفعال',
-            'food_photo': 'عکس غذا'
         }
