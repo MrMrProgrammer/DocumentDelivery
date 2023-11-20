@@ -111,6 +111,7 @@ def show_order(request):
 
 class UpdateOrderView(View):
     def get(self, request: HttpRequest, order_id):
+
         current_order: Order = Order.objects.filter(id=order_id).first()
 
         print(current_order.order_number)
@@ -119,6 +120,7 @@ class UpdateOrderView(View):
 
         context = {
             'edit_form': edit_form,
+            'current_order': current_order,
         }
 
         return render(request, 'Order/update-order.html', context)

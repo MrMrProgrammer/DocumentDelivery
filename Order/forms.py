@@ -53,26 +53,28 @@ class OrderForm(forms.Form):
 class UpdateOrderForm(forms.ModelForm):
     class Meta:
         model = Order
-        fields = ['store', 'order_number', 'shipping_method', 'document_defects']
+        fields = ['order_number', 'shipping_method', 'document_defects', 'date']
 
         widgets = {
 
-            'store': forms.NumberInput(attrs={
-                'class': 'form-control',
-                'placeholder': 'نام غذا'
-            }),
-            'food_price': forms.NumberInput(attrs={
+            'order_number': forms.NumberInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'قیمت'
             }),
-            'food_recipe': forms.Textarea(attrs={
+            'shipping_method': forms.Select(attrs={
                 'class': 'form-control',
-                'placeholder': 'دستورپخت'
-            }),
-
-            'food_photo': forms.ClearableFileInput(attrs={
-                'class': 'form-control',
-                'placeholder': 'عکس غذا',
+                'placeholder': 'روش ارسال',
 
             }),
+
+            'document_defects': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'نقص مدارک',
+            }),
+
+            'date': forms.DateTimeInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'تاریخ',
+            }),
+
         }
