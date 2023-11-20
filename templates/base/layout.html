@@ -50,67 +50,24 @@
             </div>
         </nav>
 
-{#        <main id="header" class="flex-shrink-0">#}
-{#            <!-- Navigation-->#}
-{#            <nav id="header" class="navbar navbar-expand-lg navbar-light bg-white py-3">#}
-{#                <div class="container px-5">#}
-{#                    <a class="navbar-brand" href="/"><span class="fw-bolder text-primary" style="color: black;">واسپاری تجار ایرانیان</span></a>#}
-{#                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>#}
-{#                    <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">#}
-{#                        <ul class="navbar-nav ms-auto mb-2 mb-lg-0 small fw-bolder">#}
-{#                            <li class="nav-item"><a class="nav-link" href="#">Home</a></li>#}
-
-{#                        </ul>#}
-{#                    </div>#}
-{#                </div>#}
-{#            </nav>#}
-{#        </main>#}
-
-{#        <div class="container-fluid text-right">#}
-{#            <div class="row">#}
-{#                <div class="col-md-6">#}
-{#                    <div id="header">#}
-{#                        <h1>واسپاری تجار ایرانیان</h1>#}
-{#                    </div>#}
-{#                </div>#}
-{##}
-{#                <div class="col-md-6 text-center">#}
-{#                    <br/>#}
-{#                    <a href="{% url 'show-store' %}" class="btn btn-success">لیست فروشگاه ها</a>#}
-{#                    <a href="{% url 'add-store' %}" class="btn btn-success">افزودن فروشگاه</a>#}
-{#                </div>#}
-{##}
-{##}
-{#            </div>#}
-{##}
-{#            <hr/>#}
-{##}
-{#        </div>#}
-
-
-        <div class="container">
+        <div class="container-fluid">
 
             <br/>
 
-            {% block mian %}{% endblock %}
+            <div class="row">
+                <div class="col-md-1"></div>
+
+                <div class="col-md-10">
+
+                    {% block mian %}{% endblock %}
+
+                </div>
+
+                <div class="col-md-1"></div>
+
+            </div>
 
         </div>
-
-        <!-- Footer-->
-{#        <footer class="bg-white py-4 mt-auto">#}
-{#            <div class="container px-5">#}
-{#                <div class="row align-items-center justify-content-between flex-column flex-sm-row">#}
-{#                    <div class="col-auto"><div class="small m-0">ساخته شده توسط <a target="_blank" href="https://www.mrmrprogrammer.ir"> سید محمدرضا هاشمی</a></div></div>#}
-{#                    <div class="col-auto">#}
-{#                        <a class="text-gradient" target="_blank" href="{{ home_data.instagram_link }}"><i class="bi bi-instagram"></i></a>#}
-{#                        <span class="mx-1"></span>#}
-{#                        <a class="text-gradient" target="_blank" href="{{ home_data.linkedin_link }}"><i class="bi bi-linkedin"></i></a>#}
-{#                        <span class="mx-1"></span>#}
-{#                        <a class="text-gradient" target="_blank" href="{{ home_data.github_link }}"><i class="bi bi-github"></i></a>#}
-{#                    </div>#}
-{#                </div>#}
-{#            </div>#}
-{#        </footer>#}
 
         <br/>
         <br/>

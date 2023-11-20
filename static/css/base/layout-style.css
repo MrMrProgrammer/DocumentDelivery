@@ -75,3 +75,10 @@ footer a {
 .btn {
     width: 150px;
 }
+
+.action_box {
+    background-color: rgba(247, 247, 247, 0.822);
+    padding: 10px;
+    border-radius: 10px;
+    border:1px solid gainsboro ;
+}
