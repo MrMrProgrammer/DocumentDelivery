@@ -8,6 +8,7 @@ from .models import Order
 #         fields = '__all__'
 
 class OrderForm(forms.Form):
+
     store_name = forms.CharField(
         label='نام فروشگاه',
         widget=forms.TextInput(attrs=
@@ -18,12 +19,14 @@ class OrderForm(forms.Form):
             'readonly': 'readonly',
             'type': 'hidden',
             'required':'required',
+            'rows':3,
         }),
     )
 
-    order_number = forms.IntegerField(
+    order_number = forms.CharField(
         label='شماره سفارش',
-        widget=forms.NumberInput(attrs=
+        required=False,
+        widget=forms.Textarea(attrs=
         {
             'class': 'form-control',
             'placeholder': 'شماره سفارش'
@@ -41,13 +44,13 @@ class OrderForm(forms.Form):
         choices=shipping_methods,
     )
 
-    description = forms.CharField(
-        label='توضیحات',
-        required=False,
-        widget=forms.Textarea(attrs=
-        {
-            'class': 'form-control',
-            'placeholder': 'توضیحات',
-            'rows': 5
-        }),
-    )
+    # description = forms.CharField(
+    #     label='توضیحات',
+    #     required=False,
+    #     widget=forms.Textarea(attrs=
+    #     {
+    #         'class': 'form-control',
+    #         'placeholder': 'توضیحات',
+    #         'rows': 5
+    #     }),
+    # )
