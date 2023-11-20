@@ -37,7 +37,7 @@
                                     <th>تاریخ</th>
                                     <th>ساعت</th>
                                     <th>روش ارسال</th>
-                                    <th>توضیحات</th>
+                                    <th>نقص مدارک</th>
                                 </tr>
                             </thead>
 
@@ -49,7 +49,11 @@
                                         <td>{{ order.date }}</td>
                                         <td>{{ order.time }}</td>
                                         <td>{{ order.shipping_method }}</td>
-                                        <td>{{ order.description }}</td>
+                                        {% if order.document_defects %}
+                                            <td>{{ order.document_defects }}</td>
+                                        {% else %}
+                                            <td>-</td>
+                                        {% endif %}
                                     </tr>
                                 {% endfor %}
                             </tbody>

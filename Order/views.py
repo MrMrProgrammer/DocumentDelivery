@@ -6,6 +6,7 @@ from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from Store.models import Store
 
+
 def list_cleaner(input_list):
     output = []
 
@@ -39,7 +40,6 @@ class GetDocument(View):
             shipping_method = register_form.cleaned_data.get('shipping_method')
             description = register_form.cleaned_data.get('description')
 
-
             order_number_list = []
             order_number_list = order_number.split('/')
 
@@ -58,12 +58,26 @@ class GetDocument(View):
 
                     new_doc.save()
 
-                else:
-                    document_defects = order.split(':')
-                    print(document_defects)
-                    clean_document_defects = list_cleaner(document_defects)
-                    
+                elif '-' in order:
+                    data = order.split('-')
+                    if data[0].isdigit():
+                        new_doc = Order(
+                            store_id=store,
+                            order_number=data[0],
+                            shipping_method=shipping_method,
+                            document_defects=data[1]
+                        )
 
+                        new_doc.save()
+
+                else:
+                    new_doc = Order(
+                        store_id=store,
+                        shipping_method=shipping_method,
+                        document_defects=order
+                    )
+
+                    new_doc.save()
 
             # new_doc = Order(
             #     store_id=store,
