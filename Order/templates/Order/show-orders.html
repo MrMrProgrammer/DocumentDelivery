@@ -20,7 +20,7 @@
         <br/>
         <br/>
 
-        <div class="col-md-6 text-center">
+        <div class="col-md-9 text-center">
             <h1>مدارک ثبت شده</h1>
 
             <br/>
@@ -38,6 +38,8 @@
                                     <th>ساعت</th>
                                     <th>روش ارسال</th>
                                     <th>نقص مدارک</th>
+                                    <th>ویرایش</th>
+                                    <th>حذف</th>
                                 </tr>
                             </thead>
 
@@ -54,6 +56,18 @@
                                         {% else %}
                                             <td>-</td>
                                         {% endif %}
+                                        <td>
+                                            <a>
+                                                <img class="icon" src="{% static 'Order/image/edit-icon.png' %}" />
+                                            </a>
+                                        </td>
+
+                                        <td>
+                                            <a href="{% url 'delete_order' order_id=order.id %}">
+                                                <img class="icon" src="{% static 'Order/image/delete-icon.png' %}"/>
+                                            </a>
+                                        </td>
+
                                     </tr>
                                 {% endfor %}
                             </tbody>
@@ -64,44 +78,6 @@
             </div>
         </div>
 
-        <div class="col-md-3 text-center action_box">
-
-            <div class="row">
-                <div class="col-12">
-                    <br/>
-                    <h3>فعالیت ها</h3>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-12">
-                    <br/>
-                    <a href="{% url 'add-order' %}" class="btn btn-success">افزودن مدارک</a>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-12">
-                    <br/>
-                    <a href="{% url 'show-orders' %}" class="btn btn-outline-primary">مشاهده لیست مدارک</a>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-12">
-                    <br/>
-                    <a href="{% url 'add-store' %}" class="btn btn-outline-success">افزودن فروشگاه</a>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-12">
-                    <br/>
-                    <a href="{% url 'show-store' %}" class="btn btn-outline-secondary">مشاهده لیست فروشگاه ها</a>
-                </div>
-            </div>
-
-        </div>
     </div>
 
 {% endblock %}

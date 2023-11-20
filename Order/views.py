@@ -5,6 +5,7 @@ from .models import Order
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from Store.models import Store
+from django.http import HttpRequest, HttpResponse
 
 
 def list_cleaner(input_list):
@@ -106,3 +107,12 @@ def show_order(request):
     }
 
     return render(request, 'Order/show-orders.html', context)
+
+
+def update_order(request, order_id):
+    pass
+
+
+def delete_order(request: HttpRequest, order_id):
+    order_obj = Order.objects.filter(id=order_id).delete()
+    return redirect('show-orders')
