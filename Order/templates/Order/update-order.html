@@ -1,4 +1,10 @@
 {% extends 'base/layout.html' %}
+{% load static %}
+
+{% block header-link %}
+    <link rel="stylesheet" href="{% static 'css/Order/add-order-style.css' %}"/>
+    <script src="{% static 'js/Order/add-order-script.js' %}"></script>
+{% endblock %}
 
 {% block mian %}
 
@@ -16,20 +22,80 @@
 
                 <br/>
 
-                {{ edit_form.order_number }}
+                <div class="row">
+                    <div class="col-10">
+                        {{ register_form.store_name }}
+                        <input type="text" placeholder="نام فروشگاه" class="form-control" readonly id="fake_store_id_input" required>
+                    </div>
+                    <div class="col-2 text-right">
+                        <button type="button" onclick="remove_from_input()" id="remove-btn">
+                            <img id="remove-icon" src="{% static 'icon/icons8-delete-48.png' %}">
+                        </button>
+                    </div>
+                </div>
 
                 <br/>
 
-                {{ edit_form.shipping_method }}
+                <div class="row">
+                    <div class="col-12">
+
+                        <button type="button" onclick="show_stores()" class="btn btn-primary" id="search-btn">جستجو نام فروشگاه</button>
+
+                        <div id="myDropdown" class="dropdown-content">
+                            <input type="text" placeholder="جستجو نام فروشگاه" id="myInput" onkeyup="filterFunction()">
+
+                            {% for store in stores %}
+                                <a onclick='add_to_input("{{ store.store_name }}", "{{ store.id }}")'>{{ store.store_name }}</a>
+                            {% endfor %}
+                        </div>
+
+                    </div>
+                </div>
 
                 <br/>
 
-                {{ edit_form.document_defects }}
+                <div class="row">
+                    <div class="col-12">
+                        {{ edit_form.order_number }}
+                    </div>
+                </div>
 
                 <br/>
 
-                {{ edit_form.date }}
+                <div class="row">
+                    <div class="col-12">
+                        {{ edit_form.shipping_method }}
+                    </div>
+                </div>
+                <br/>
 
+                <div class="row">
+                    <div class="col-12">
+                        {{ edit_form.document_defects }}
+                    </div>
+                </div>
+                <br/>
+
+                <div class="row">
+                    <div class="col-6">
+                        {{ edit_form.time }}
+                    </div>
+
+                    <div class="col-6">
+                        {{ edit_form.date }}
+                    </div>
+                </div>
+                <br/>
+
+                <div class="row">
+                    <div class="col-6">
+                        <input type="time" class="form-control"/>
+                    </div>
+
+                    <div class="col-6">
+                        <input type="date" class="form-control"/>
+                    </div>
+                </div>
                 <br/>
 
                 <button type="submit" class="btn btn-success">ویرایش</button>
