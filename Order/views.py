@@ -42,6 +42,8 @@ class GetDocument(View):
             shipping_method = register_form.cleaned_data.get('shipping_method')
             description = register_form.cleaned_data.get('description')
 
+            time = datetime. now()
+
             order_number_list = []
             order_number_list = order_number.split('/')
 
@@ -109,6 +111,7 @@ def show_order(request):
 
     return render(request, 'Order/show-orders.html', context)
 
+
 class UpdateOrderView(View):
     def get(self, request: HttpRequest, order_id):
 
@@ -146,3 +149,6 @@ class UpdateOrderView(View):
 def delete_order(request: HttpRequest, order_id):
     order_obj = Order.objects.filter(id=order_id).delete()
     return redirect('show-orders')
+
+
+

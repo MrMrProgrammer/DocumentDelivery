@@ -53,10 +53,9 @@ class OrderForm(forms.Form):
 class UpdateOrderForm(forms.ModelForm):
     class Meta:
         model = Order
-        fields = ['order_number', 'shipping_method', 'document_defects', 'date']
+        fields = ['order_number', 'shipping_method', 'document_defects', 'date', 'time']
 
         widgets = {
-
             'order_number': forms.NumberInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'قیمت'
@@ -72,9 +71,14 @@ class UpdateOrderForm(forms.ModelForm):
                 'placeholder': 'نقص مدارک',
             }),
 
-            'date': forms.DateTimeInput(attrs={
+            'date': forms.DateInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'تاریخ',
+            }),
+
+            'time': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'ساعت',
             }),
 
         }
