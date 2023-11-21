@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.shortcuts import render, redirect
 from django.views import View
 from .forms import OrderForm
@@ -42,7 +44,7 @@ class GetDocument(View):
             shipping_method = register_form.cleaned_data.get('shipping_method')
             description = register_form.cleaned_data.get('description')
 
-            time = datetime. now()
+            # time = datetime. now()
 
             order_number_list = []
             order_number_list = order_number.split('/')
@@ -112,9 +114,9 @@ def show_order(request):
     return render(request, 'Order/show-orders.html', context)
 
 
+@method_decorator(login_required, name='dispatch')
 class UpdateOrderView(View):
     def get(self, request: HttpRequest, order_id):
-
         current_order: Order = Order.objects.filter(id=order_id).first()
 
         print(current_order.order_number)
@@ -151,4 +153,6 @@ def delete_order(request: HttpRequest, order_id):
     return redirect('show-orders')
 
 
-
+def get_report(request: HttpRequest, data):
+    print(data)
+    return render(request, 'Order/show-orders.html')

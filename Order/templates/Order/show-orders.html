@@ -11,9 +11,24 @@
 
     <div class="row">
         
-        <div class="col-md-3 text-center action_box">
-            <div style="background-color: red">
-                filter
+        <div class="col-md-3 text-center">
+
+            <div class="row">
+                <a style="width: 100%" href="{% url 'get_report' data=orders %}">
+                    <div class="col-12 btn btn-success">
+                        get report
+                    </div>
+                </a>
+            </div>
+
+            <br/>
+
+            <div class="row">
+                <div class="col-12 action_box">
+                    <div style="background-color: red">
+                        filter
+                    </div>
+                </div>
             </div>
         </div>
 
