@@ -6,6 +6,5 @@ urlpatterns = [
     path('show-orders', views.show_order, name='show-orders'),
     path('update_order/<int:order_id>', views.UpdateOrderView.as_view(), name='update_order'),
     path('delete_order/<int:order_id>', views.delete_order, name='delete_order'),
-    path('get_report/<list:data>', views.get_report, name='get_report')
-
+    path('get_report', views.get_report, name='get_report')
 ]

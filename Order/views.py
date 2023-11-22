@@ -1,5 +1,6 @@
 from datetime import datetime
 
+from django.core.serializers import serialize
 from django.shortcuts import render, redirect
 from django.views import View
 from .forms import OrderForm
@@ -106,6 +107,9 @@ class GetDocument(View):
 @login_required
 def show_order(request):
     orders = Order.objects.all()
+    serialized_data = serialize('json', orders)
+
+    request.session['objects_to_pass'] = serialized_data
 
     context = {
         'orders': orders
@@ -153,6 +157,7 @@ def delete_order(request: HttpRequest, order_id):
     return redirect('show-orders')
 
 
-def get_report(request: HttpRequest, data):
-    print(data)
-    return render(request, 'Order/show-orders.html')
+def get_report(request: HttpRequest):
+    objects_to_pass = request.session.get('objects_to_pass', [])
+    print(objects_to_pass)
+    return redirect('show-orders')
