@@ -16,12 +16,16 @@
 
         <div class="col-md-6 text-center">
             <br>
-            <form action="{% url 'add-store' %}" method="post">
+            <form action="{% url 'add-store' %}" method="post" class="form">
                 {% csrf_token %}
 
                 {{ register_form.store_name }}
 
+                <br/>
 
+                {{ register_form.is_active }} فعال / غیرفعال
+
+                <br/>
                 <br/>
 
                 <button class="btn btn-success" type="submit">ذخیره فروشگاه</button>

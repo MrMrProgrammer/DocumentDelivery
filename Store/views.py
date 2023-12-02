@@ -8,7 +8,7 @@ from .forms import StoreRegisterForm
 
 @login_required
 def show_store(request):
-    stores = Store.objects.all()
+    stores = Store.objects.filter(is_delete=False)
 
     context = {
         'stores': stores,
@@ -50,3 +50,11 @@ class StoreRegisterView(View):
         # }
         #
         # return render(request, 'Store/add-store.html', context)
+
+
+def delete_store(request, store_id):
+    store = Store.objects.filter(id=store_id).first()
+    store.is_delete = True
+    store.save()
+
+    return redirect('show-store')

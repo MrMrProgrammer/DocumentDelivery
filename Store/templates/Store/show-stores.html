@@ -1,24 +1,79 @@
 {% extends 'base/layout.html' %}
+{% load static %}
 
-
+{% block header-link %}
+    <link rel="stylesheet" href="{% static 'css/Store/show-stores-style.css' %}">
+{% endblock %}
 
 {% block page-title %}لیست فروشگاه ها{% endblock %}
 
 {% block mian %}
-    <div class="row text-center">
-        <div class="col-md-3"></div>
 
-        <div class="col-md-6">
+    <div class="row">
+
+        <div class="col-md-2"></div>
+
+        <div class="col-md-8 text-center">
+
             <h1>لیست فروشگاه ها</h1>
 
-            {% for store in stores %}
-                {{ store.store_name }}
-                <br/>
-            {% endfor %}
+            <br/>
 
+            <div class="row">
+                <div class="col-12">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+
+                            <thead>
+                            <tr>
+                                <th>نام فروشگاه</th>
+                                <th>وضعیت</th>
+                                <th>ویرایش</th>
+                                <th>حذف</th>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+
+                            {% for store in stores %}
+                                <tr>
+                                    <td>{{ store.store_name }}</td>
+
+                                    <td>
+                                        {% if store.is_active %}
+                                            <img class="icon" src="{% static 'icons/icons8-checkmark-64.png' %}" />
+                                        {% else %}
+                                            <img class="icon" src="{% static 'icons/icons8-no-64.png' %}">
+                                        {% endif %}
+                                    </td>
+
+                                    <td>
+                                        <a>
+                                            {# href="{% url 'update_order' order_id=order.id %}"#}
+                                            <img class="icon" src="{% static 'Order/image/edit-icon.png' %}"/>
+                                        </a>
+                                    </td>
+
+                                    <td>
+                                        <a href="{% url 'delete-store' store_id=store.id %}">
+                                            {# href="{% url 'delete_order' order_id=order.id %}"#}
+                                            <img class="icon" src="{% static 'Order/image/delete-icon.png' %}"/>
+                                        </a>
+                                    </td>
+
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <div class="col-md-3"></div>
+        <div class="col-md-2"></div>
+
 
     </div>
+
 {% endblock %}
