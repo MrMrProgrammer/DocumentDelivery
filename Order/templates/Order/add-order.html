@@ -6,6 +6,17 @@
 {% block header-link %}
     <link rel="stylesheet" href="{% static 'css/Order/add-order-style.css' %}"/>
     <script src="{% static 'js/Order/add-order-script.js' %}"></script>
+
+    <link rel="stylesheet" href="https://unpkg.com/@majidh1/jalalidatepicker/dist/jalalidatepicker.min.css">
+    <script type="text/javascript" src="https://unpkg.com/@majidh1/jalalidatepicker/dist/jalalidatepicker.min.js"></script>
+
+    <link type="text/css" rel="stylesheet" href="/home/user/Desktop/MrMr/Repository/DocumentDelivery/static/JalaliDatePicker/jalalidatepicker.css" />
+    <script type="text/javascript" src="/home/user/Desktop/MrMr/Repository/DocumentDelivery/static/JalaliDatePicker/jalalidatepicker.js"></script>
+
+    <link type="text/css" rel="stylesheet" href="{% static 'JalaliDatePicker/jalalidatepicker.css' %}" />
+    <script type="text/javascript" src="{% static 'JalaliDatePicker/jalalidatepicker.js' %}"></script>
+
+
 {% endblock %}
 
 {% block mian %}
@@ -76,6 +87,24 @@
 
                 <br/>
 
+                <div class="row text-center">
+
+                    <div class="col-2"></div>
+
+                    <div class="col-4">
+                        <input type="text" placeholder="تاریخ را وارد کنید" class="form-control" data-jdp />
+                    </div>
+
+                    <div class="col-4">
+                        <input type="time" class="form-control" placeholder="ساعت را وارد کنید" />
+                    </div>
+
+                    <div class="col-2"></div>
+
+                </div>
+
+                <br/>
+
                 <div class="row">
                     <div class="col-md-6">
                         <button type="submit" class="btn btn-success" id="sub-btn">ذخیره</button>
@@ -118,6 +147,8 @@
 
 
     </div> -->
+
+    <script>jalaliDatepicker.startWatch();</script>
 
 {% endblock %}
 
