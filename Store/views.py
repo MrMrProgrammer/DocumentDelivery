@@ -4,6 +4,8 @@ from django.utils.decorators import method_decorator
 from django.views import View
 from .models import Store
 from .forms import StoreRegisterForm
+from django.http import HttpRequest, HttpResponse, HttpResponseNotFound
+from .forms import UpdateStoreForm
 
 
 @login_required
@@ -58,3 +60,35 @@ def delete_store(request, store_id):
     store.save()
 
     return redirect('show-store')
+
+
+class UpdateStoreView(View):
+
+    def get(self, request: HttpRequest, store_id):
+        current_store: Store = Store.objects.filter(id=store_id).first()
+
+        edit_form = UpdateStoreForm(instance=current_store)
+
+        context = {
+            'edit_form': edit_form,
+            'store_id': store_id,
+        }
+
+        return render(request, 'Store/update-store.html', context)
+
+    def post(self, request: HttpRequest, store_id):
+
+        current_store: Store = Store.objects.filter(id=store_id).first()
+
+        edit_form = UpdateStoreForm(request.POST, request.FILES, instance=current_store)
+
+        if edit_form.is_valid():
+            edit_form.save(commit=True)
+
+            return redirect('show-store')
+
+        context = {
+            'edit_form': edit_form,
+        }
+
+        return render(request, 'Store/update-store.html', context)
