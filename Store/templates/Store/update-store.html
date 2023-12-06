@@ -1,15 +1,64 @@
 {% extends 'base/layout.html' %}
 
-{% block page-title %}{% endblock %}
+{% block page-title %}
+    ویرایش اطلاعات فروشگاه
+{% endblock %}
 
 {% block header-link %}{% endblock %}
 
 {% block mian %}
 
-    <form>
+    <div class="row">
+        <div class="col-md-3"></div>
 
+        <div class="col-md-6">
 
+            <div class="row text-center">
+                <div class="col-12">
+                    <h1>ویرایش اطلاعات فروشگاه</h1>
+                </div>
+            </div>
 
-    </form>
+            <br/>
 
+            <div class="row">
+                <div class="col-12">
+
+                    <form method="post" action="{% url 'update-store' store_id=store_id %}">
+                        {% csrf_token %}
+
+                        <br/>
+
+                        <div class="row">
+                            <div class="col-12">
+                                {{ edit_form.store_name }}
+                            </div>
+                        </div>
+
+                        <br/>
+
+                        <div class="row text-center">
+                            <div class="col-12">
+                                فعال / غیرفعال : {{ edit_form.is_active }}
+                            </div>
+                        </div>
+
+                        <br/>
+
+                        <div class="row text-center">
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-success">ذخیره</button>
+                            </div>
+                        </div>
+
+                        <br/>
+
+                    </form>
+
+                </div>
+            </div>
+
+            <div class="col-md-3"></div>
+        </div>
+    </div>
 {% endblock %}
