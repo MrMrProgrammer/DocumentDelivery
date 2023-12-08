@@ -11,7 +11,6 @@ from django.http import HttpRequest, HttpResponse
 from .forms import UpdateOrderForm
 
 
-
 def list_cleaner(input_list):
     output = []
 
