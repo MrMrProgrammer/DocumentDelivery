@@ -20,6 +20,7 @@ def list_cleaner(input_list):
     return output
 
 
+
 @method_decorator(login_required, name='dispatch')
 class GetDocument(View):
     def get(self, request):
