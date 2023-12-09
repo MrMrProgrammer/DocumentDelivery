@@ -8,12 +8,14 @@
 
 #remove-btn {
     border: none;
-    background-color: #9fcdff;
+    /*background-color: #9fcdff;*/
+    background-color: #fafafa;
+
 }
 
-.btn {
-    width: 80%;
-}
+/*.btn {*/
+/*    width: 80%;*/
+/*}*/
 
 #sub-btn {
     display: none;
@@ -87,4 +89,8 @@ div#myDropdown a {
 
 #myInput:focus {
     width: 100%;
+}
+
+form {
+    direction: rtl;
 }
