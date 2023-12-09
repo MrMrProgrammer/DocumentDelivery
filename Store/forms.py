@@ -14,7 +14,7 @@ class StoreRegisterForm(forms.Form):
     is_active = forms.BooleanField()
 
 
-<<<<<<< HEAD
+
 class UpdateStoreForm(forms.ModelForm):
 
     class Meta:
@@ -45,7 +45,7 @@ class UpdateStoreForm(forms.ModelForm):
             'store_name': 'نام فروشگاه',
             'is_active': 'فعال / غیرفعال'
         }
-=======
+
 # class UpdateStoreForm(forms.ModelForm):
 #
 #     is_active = forms.BooleanField(required=False, label='فعال / غیرفعال')
@@ -84,4 +84,3 @@ class UpdateStoreForm(forms.ModelForm):
 #         #     'is_active': 'فعال / غیرفعال',
 #         #     'food_photo': 'عکس غذا'
 #         # }
->>>>>>> 60211c6 (change template)
