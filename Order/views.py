@@ -1,5 +1,4 @@
 from datetime import datetime
-from django.core.serializers import serialize
 from django.shortcuts import render, redirect
 from django.views import View
 from .forms import OrderForm
@@ -9,6 +8,10 @@ from django.contrib.auth.decorators import login_required
 from Store.models import Store
 from django.http import HttpRequest, HttpResponse
 from .forms import UpdateOrderForm
+from django.http import HttpResponse
+import pandas as pd
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+import os
 
 
 def list_cleaner(input_list):
@@ -106,9 +109,18 @@ class GetDocument(View):
 @login_required
 def show_order(request):
     orders = Order.objects.all()
-    serialized_data = serialize('json', orders)
 
-    request.session['objects_to_pass'] = serialized_data
+    per_page = 10
+    paginator = Paginator(orders, per_page)
+
+    page = request.GET.get('page')
+
+    try:
+        orders = paginator.page(page)
+    except PageNotAnInteger:
+        orders = paginator.page(1)
+    except EmptyPage:
+        orders = paginator.page(paginator.num_pages)
 
     context = {
         'orders': orders
@@ -156,7 +168,38 @@ def delete_order(request: HttpRequest, order_id):
     return redirect('show-orders')
 
 
-def get_report(request: HttpRequest):
-    objects_to_pass = request.session.get('objects_to_pass', [])
-    print(objects_to_pass)
-    return redirect('show-orders')
+def get_report(objects):
+    pass
+
+
+def export_to_excel(request):
+
+    date = datetime.now().strftime("%Y - %M - %D")
+
+    # Your data to be exported to Excel
+    data = {
+        'Column1': [1, 2, 3, 4, 5, 6],
+        'Column2': ['A', 'B', 'C', 'D', 'E', 'F']
+    }
+
+    # Create a DataFrame from the data
+    df = pd.DataFrame(data)
+
+    # Define the path to the Report folder
+    report_folder = "Report"
+    if not os.path.exists(report_folder):
+        os.makedirs(report_folder)
+
+    # Create the full path for the Excel file
+    excel_filename = os.path.join(report_folder, f"Report.xlsx")
+
+    # Export DataFrame to Excel
+    df.to_excel(excel_filename, index=False)
+
+    # Prepare response for file download
+    with open(excel_filename, 'rb') as excel_file:
+        response = HttpResponse(excel_file.read(),
+                                content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+        response['Content-Disposition'] = f'attachment; filename={excel_filename}'
+
+    return response
