@@ -9,4 +9,6 @@ urlpatterns = [
     path('get_report', views.get_report, name='get_report'),
 
     path('export-to-excel/', views.export_to_excel, name='export_to_excel'),
+
+    path('filter_orders', views.filter_orders, name='filter_orders'),
 ]
