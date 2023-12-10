@@ -56,22 +56,11 @@ function remove_from_input() {
     document.getElementById('sub-btn-again').style.display = 'none';
 }
 
-//==============================================================
+// ===============================================
 
-// function dropfunc() {
-//     document.getElementById("myDropdown").classList.toggle("show");
-// }
-//
-// let myDropdown = document.getElementById("myDropdown");
-// let myDropdownBtn = document.getElementById("myDropdownBtn");
-// document.addEventListener('click', function (e) {
-//
-//     if (!myDropdown.contains(e.target) && !myDropdownBtn.contains(e.target)) {
-//         if (myDropdown.classList.contains('show')) {
-//             e.preventDefault();
-//             myDropdown.classList.remove('show');
-//         }
-//     }
-// });
+function report() {
 
-//==============================================================
+    $.get("/Order/export-to-excel").then(res => {
+        console.log("ok")
+    });
+}
