@@ -9,19 +9,25 @@
 
 {% block mian %}
 
+
+
     <div class="row">
-        
+
         <div class="col-md-3 text-center">
 
             <br/>
             <br/>
 
             <div class="row">
-                <a href="{% url 'get_report' %}">
-                    <div class="col-12 btn btn-success">
-                        get report
-                    </div>
-                </a>
+
+                <div class="col-12">
+                    <form action="{% url 'export_to_excel' %}" method="get">
+                        {% csrf_token %}
+                        <button class="btn btn-success" style="width: 100%" type="submit">دانلود فایل اکسل</button>
+                    </form>
+
+                </div>
+
             </div>
 
             <br/>
@@ -49,51 +55,95 @@
                         <table class="table table-striped">
 
                             <thead>
-                                <tr>
-                                    <th>نام فروشگاه</th>
-                                    <th>شماره سفارش</th>
-                                    <th>تاریخ</th>
-                                    <th>ساعت</th>
-                                    <th>روش ارسال</th>
-                                    <th>نقص مدارک</th>
-                                    <th>ویرایش</th>
-                                    <th>حذف</th>
-                                </tr>
+                            <tr>
+                                <th>نام فروشگاه</th>
+                                <th>شماره سفارش</th>
+                                <th>تاریخ</th>
+                                <th>ساعت</th>
+                                <th>روش ارسال</th>
+                                <th>نقص مدارک</th>
+                                <th>ویرایش</th>
+                                <th>حذف</th>
+                            </tr>
                             </thead>
 
                             <tbody>
-                                {% for order in orders %}
-                                    <tr>
-                                        <td>{{ order.store.store_name }}</td>
-                                        <td>{{ order.order_number }}</td>
-                                        <td>{{ order.date }}</td>
-                                        <td>{{ order.time }}</td>
-                                        <td>{{ order.shipping_method }}</td>
-                                        {% if order.document_defects %}
-                                            <td>{{ order.document_defects }}</td>
-                                        {% else %}
-                                            <td>-</td>
-                                        {% endif %}
-                                        <td>
-                                            <a href="{% url 'update_order' order_id=order.id %}">
-                                                <img class="icon" src="{% static 'Order/image/edit-icon.png' %}" />
-                                            </a>
-                                        </td>
+                            {% for order in orders %}
+                                <tr>
+                                    <td>{{ order.store.store_name }}</td>
+                                    <td>{{ order.order_number }}</td>
+                                    <td>{{ order.date }}</td>
+                                    <td>{{ order.time }}</td>
+                                    <td>{{ order.shipping_method }}</td>
+                                    {% if order.document_defects %}
+                                        <td>{{ order.document_defects }}</td>
+                                    {% else %}
+                                        <td>-</td>
+                                    {% endif %}
+                                    <td>
+                                        <a href="{% url 'update_order' order_id=order.id %}">
+                                            <img class="icon" src="{% static 'Order/image/edit-icon.png' %}"/>
+                                        </a>
+                                    </td>
 
-                                        <td>
-                                            <a href="{% url 'delete_order' order_id=order.id %}">
-                                                <img class="icon" src="{% static 'Order/image/delete-icon.png' %}"/>
-                                            </a>
-                                        </td>
+                                    <td>
+                                        <a href="{% url 'delete_order' order_id=order.id %}">
+                                            <img class="icon" src="{% static 'Order/image/delete-icon.png' %}"/>
+                                        </a>
+                                    </td>
 
-                                    </tr>
-                                {% endfor %}
+                                </tr>
+                            {% endfor %}
                             </tbody>
 
                         </table>
                     </div>
                 </div>
             </div>
+
+            <div class="row ">
+
+                <div class="col-4"></div>
+
+                <div class="col-4">
+
+                    <nav aria-label="Page navigation example">
+
+                        <ul class="pagination justify-content-center">
+
+                            {% if orders.has_previous %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ orders.previous_page_number }}"
+                                       aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                        <span class="sr-only">Previous</span>
+                                    </a>
+                                </li>
+                            {% endif %}
+
+                            <li class="page-item"><a class="page-link active" href="#">{{ orders.number }}</a></li>
+
+                            {% if orders.has_next %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ orders.next_page_number }}" aria-label="Next">
+                                        <span aria-hidden="true">&raquo;</span>
+                                        <span class="sr-only">Next</span>
+                                    </a>
+                                </li>
+
+                            {% endif %}
+
+
+                        </ul>
+                    </nav>
+
+                </div>
+
+                <div class="col-4"></div>
+
+            </div>
+
+
         </div>
 
     </div>
