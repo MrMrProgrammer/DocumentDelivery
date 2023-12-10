@@ -7,11 +7,11 @@
     <link rel="stylesheet" href="{% static 'css/Order/add-order-style.css' %}"/>
     <script src="{% static 'js/Order/add-order-script.js' %}"></script>
 
-    <link rel="stylesheet" href="https://unpkg.com/@majidh1/jalalidatepicker/dist/jalalidatepicker.min.css">
-    <script type="text/javascript" src="https://unpkg.com/@majidh1/jalalidatepicker/dist/jalalidatepicker.min.js"></script>
-
-    <link type="text/css" rel="stylesheet" href="/home/user/Desktop/MrMr/Repository/DocumentDelivery/static/JalaliDatePicker/jalalidatepicker.css" />
-    <script type="text/javascript" src="/home/user/Desktop/MrMr/Repository/DocumentDelivery/static/JalaliDatePicker/jalalidatepicker.js"></script>
+{#    <link rel="stylesheet" href="https://unpkg.com/@majidh1/jalalidatepicker/dist/jalalidatepicker.min.css">#}
+{#    <script type="text/javascript" src="https://unpkg.com/@majidh1/jalalidatepicker/dist/jalalidatepicker.min.js"></script>#}
+{##}
+{#    <link type="text/css" rel="stylesheet" href="/home/user/Desktop/MrMr/Repository/DocumentDelivery/static/JalaliDatePicker/jalalidatepicker.css" />#}
+{#    <script type="text/javascript" src="/home/user/Desktop/MrMr/Repository/DocumentDelivery/static/JalaliDatePicker/jalalidatepicker.js"></script>#}
 
     <link type="text/css" rel="stylesheet" href="{% static 'JalaliDatePicker/jalalidatepicker.css' %}" />
     <script type="text/javascript" src="{% static 'JalaliDatePicker/jalalidatepicker.js' %}"></script>
@@ -53,8 +53,9 @@
                             <input type="text" placeholder="جستجو نام فروشگاه" id="myInput" onkeyup="filterFunction()">
 
                             {% for store in stores %}
-                                <a onclick='add_to_input("{{ store.store_name }}", "{{ store.id }}")'>{{ store.store_name }}</a>
+                                <a onclick='add_to_input("{{ store.store_name }}", "{{ store.id }}")' style="color:red;" {% if not store.is_active %}class="bg-danger"{% endif %}>{{ store.store_name }}</a>
                             {% endfor %}
+                        
                         </div>
 
                     </div>
@@ -75,9 +76,13 @@
                         <h5>روش دریافت:</h5>
                     </div>
                     <div class="col-8 text-right">
+                        <div class="row">
+                            <div class="col-6">
+                                {{ register_form.shipping_method }}
+                            </div>
+                            <div class="col-6"></div>
 
-                        {{ register_form.shipping_method }}
-
+                        </div>
                     </div>
                 </div>
 
