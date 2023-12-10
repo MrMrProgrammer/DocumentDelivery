@@ -4,10 +4,13 @@
 <html lang="en">
 
 <head>
+
     <title>{% block page-title %}واسپاری تجار ایرانیان{% endblock %}</title>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
 
@@ -17,7 +20,17 @@
 
     <link rel="stylesheet" href="{% static 'css/base/style.css' %}">
 
+    <script src="{% static 'js/popper.js' %}"></script>
+
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+
+    <script src="{% static 'js/main.js' %}"></script>
+
+
     {% block header-link %}{% endblock %}
+
+{#    <script src="{% static 'js/jquery.min.js' %}"></script>#}
+
 
 </head>
 
@@ -27,9 +40,22 @@
     <nav id="sidebar">
         <div class="p-4 pt-5">
 
-            {#            <a href="#" class="img logo rounded-circle mb-5" style="background-image: url(images/logo.jpg);"></a>#}
+{#                        <a href="#" class="img logo rounded-circle mb-5" style="background-image: url(images/logo.jpg);"></a>#}
+
+            <div class="row">
+                <div class="col-12">
+                    <h3 class="text-white">واسپاری تجار ایرانیان</h3>
+                </div>
+            </div>
+
+            <br/>
 
             <ul class="list-unstyled components mb-5">
+
+                <li class="active">
+                    <a href="{% url 'home' %}">خانه</a>
+                </li>
+
                 <li class="active">
                     <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">سفارش
                         ها</a>
@@ -139,14 +165,6 @@
 
     </div>
 </div>
-
-<script src="{% static 'js/jquery.min.js' %}"></script>
-
-<script src="{% static 'js/popper.js' %}"></script>
-
-<script src="{% static 'js/bootstrap.min.js' %}"></script>
-
-<script src="{% static 'js/main.js' %}"></script>
 
 </body>
 </html>
