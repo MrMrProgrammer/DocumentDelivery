@@ -1,4 +1,5 @@
-from datetime import datetime
+import datetime
+from django.db.models import Q
 from django.shortcuts import render, redirect
 from django.views import View
 from .forms import OrderForm
@@ -7,7 +8,7 @@ from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from Store.models import Store
 from django.http import HttpRequest, HttpResponse
-from .forms import UpdateOrderForm
+from .forms import UpdateOrderForm, filterOrderForm
 from django.http import HttpResponse
 import pandas as pd
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -26,7 +27,7 @@ def list_cleaner(input_list):
 @method_decorator(login_required, name='dispatch')
 class GetDocument(View):
     def get(self, request):
-        stores = Store.objects.all()
+        stores = Store.objects.filter(is_delete=False)
 
         register_form = OrderForm()
 
@@ -45,9 +46,16 @@ class GetDocument(View):
             store = register_form.cleaned_data.get('store_name')
             order_number = register_form.cleaned_data.get('order_number')
             shipping_method = register_form.cleaned_data.get('shipping_method')
-            description = register_form.cleaned_data.get('description')
+            date = register_form.cleaned_data.get('date')
+            time = register_form.cleaned_data.get('time')
 
-            # time = datetime. now()
+            if date == None:
+                date = datetime.date.today()
+            #     .strftime('%Y-%M-%D')
+
+            if time == None:
+                time = datetime.datetime.now()
+            #     .strftime('%H:%M')
 
             order_number_list = []
             order_number_list = order_number.split('/')
@@ -62,7 +70,8 @@ class GetDocument(View):
                         store_id=store,
                         order_number=order,
                         shipping_method=shipping_method,
-                        # description=description,
+                        date=date,
+                        time=time,
                     )
 
                     new_doc.save()
@@ -74,6 +83,8 @@ class GetDocument(View):
                             store_id=store,
                             order_number=data[0],
                             shipping_method=shipping_method,
+                            date=date,
+                            time=time,
                             document_defects=data[1]
                         )
 
@@ -83,7 +94,9 @@ class GetDocument(View):
                     new_doc = Order(
                         store_id=store,
                         shipping_method=shipping_method,
-                        document_defects=order
+                        document_defects=order,
+                        date=date,
+                        time=time,
                     )
 
                     new_doc.save()
@@ -108,7 +121,14 @@ class GetDocument(View):
 
 @login_required
 def show_order(request):
-    orders = Order.objects.all()
+    is_filter = False
+
+    orders = Order.objects.all().order_by('-id')
+    orders_for_report = orders
+
+    stores = Store.objects.filter().all()
+
+    filter_order = filterOrderForm(request.POST)
 
     per_page = 10
     paginator = Paginator(orders, per_page)
@@ -123,7 +143,11 @@ def show_order(request):
         orders = paginator.page(paginator.num_pages)
 
     context = {
-        'orders': orders
+        'orders': orders,
+        'FilterOrderForm': filter_order,
+        'stores': stores,
+        'is_filter': is_filter,
+        'orders_for_report': orders_for_report
     }
 
     return render(request, 'Order/show-orders.html', context)
@@ -163,40 +187,87 @@ class UpdateOrderView(View):
     #     return render(request, 'Food/UpdateFood.html', context)
 
 
+@login_required
 def delete_order(request: HttpRequest, order_id):
     order_obj = Order.objects.filter(id=order_id).delete()
     return redirect('show-orders')
 
 
+@login_required
 def get_report(objects):
     pass
 
 
+@login_required
+def filter_orders(request: HttpRequest):
+    is_filter = True
+
+    filter_order = filterOrderForm(request.POST)
+    stores = Store.objects.filter().all().order_by('-id')
+
+    if filter_order.is_valid():
+        store_name = filter_order.cleaned_data.get('store_name')
+        order_number = filter_order.cleaned_data['order_number']
+        from_date = filter_order.cleaned_data['from_date']
+        to_date = filter_order.cleaned_data['to_date']
+        shipping_method = filter_order.cleaned_data['shipping_method']
+        document_defects = filter_order.cleaned_data['document_defects']
+
+        report_data = {
+            'store_name': store_name,
+            'order_number': order_number,
+            'from_date': from_date,
+            'to_date': to_date,
+            'shipping_method': shipping_method,
+            'document_defects': document_defects,
+        }
+
+        orders = Order.objects.filter(
+            Q(store_id=store_name) if store_name else Q(),
+            Q(order_number=order_number) if order_number else Q(),
+            # Q(from_date__gte=from_date) if from_date else Q(),
+            # Q(to_date__lte=to_date) if to_date else Q(),
+            Q(shipping_method=shipping_method) if shipping_method else Q(),
+            Q(document_defects__contains=document_defects) if document_defects else Q(),
+        )
+
+        orders_for_report = orders
+
+        print(type(orders))
+
+        context = {
+            'orders': orders,
+            'FilterOrderForm': filter_order,
+            'stores': stores,
+            'is_filter': is_filter,
+            'orders_for_report': orders_for_report,
+            'report_data': report_data
+        }
+
+        return render(request, 'Order/show-orders.html', context)
+
+
+@login_required
 def export_to_excel(request):
+    data = request.GET.get('data')
 
-    date = datetime.now().strftime("%Y - %M - %D")
+    print(data)
 
-    # Your data to be exported to Excel
     data = {
         'Column1': [1, 2, 3, 4, 5, 6],
         'Column2': ['A', 'B', 'C', 'D', 'E', 'F']
     }
 
-    # Create a DataFrame from the data
     df = pd.DataFrame(data)
 
-    # Define the path to the Report folder
     report_folder = "Report"
     if not os.path.exists(report_folder):
         os.makedirs(report_folder)
 
-    # Create the full path for the Excel file
     excel_filename = os.path.join(report_folder, f"Report.xlsx")
 
-    # Export DataFrame to Excel
     df.to_excel(excel_filename, index=False)
 
-    # Prepare response for file download
     with open(excel_filename, 'rb') as excel_file:
         response = HttpResponse(excel_file.read(),
                                 content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
