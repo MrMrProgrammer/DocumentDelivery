@@ -11,7 +11,7 @@ class StoreRegisterForm(forms.Form):
             'placeholder': 'نام فروشگاه'
         }),
     )
-    is_active = forms.BooleanField()
+    is_active = forms.BooleanField(required=False)
 
 
 
