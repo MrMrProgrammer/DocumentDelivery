@@ -1,15 +1,19 @@
 {% extends 'base/layout.html' %}
 {% load static %}
+{% load jformat %}
 
 {% block page-title %}مشاهده مدارک{% endblock %}
 
 {% block header-link %}
     <link rel="stylesheet" href="{% static 'css/Order/show-orders.css' %}"/>
+
+    <script src="{% static 'js/Order/add-order-script.js' %}"></script>
+    
 {% endblock %}
 
 {% block mian %}
 
-
+    {{ report_data }}
 
     <div class="row">
 
@@ -23,8 +27,12 @@
                 <div class="col-12">
                     <form action="{% url 'export_to_excel' %}" method="get">
                         {% csrf_token %}
-                        <button class="btn btn-success" style="width: 100%" type="submit">دانلود فایل اکسل</button>
+                        <button onclick="get_report()" class="btn btn-success" style="width: 100%">دانلود گزارش
+                        </button>
                     </form>
+                    
+                    <button class="btn btn-success" style="width:100%" onclick="report()">دریافت گزارش</button>
+                    
 
                 </div>
 
@@ -34,9 +42,109 @@
 
             <div class="row">
                 <div class="col-12 action_box">
-                    <div style="background-color: red">
-                        filter
-                    </div>
+
+                    <form method="post" action="{% url 'filter_orders' %}">
+                        {% csrf_token %}
+
+                        <div class="row">
+                            <div class="col-10">
+                                {{ register_form.store_name }}
+                                <input type="text" placeholder="نام فروشگاه" class="form-control" readonly
+                                       id="fake_store_id_input" required>
+                            </div>
+
+                            <div class="col-2">
+                                <button type="button" onclick="remove_from_input()" id="remove-btn">
+                                    <img id="remove-icon" src="{% static 'icon/icons8-delete-48.png' %}">
+                                </button>
+                            </div>
+
+                        </div>
+
+                        <br/>
+
+                        <div class="row">
+                            <div class="col-12">
+
+                                <button type="button" onclick="show_stores()" class="btn btn-primary" id="search-btn"
+                                        style="width: 100%">
+                                    جستجو نام فروشگاه
+                                </button>
+
+                                <div id="myDropdown" class="dropdown-content">
+                                    <input type="text" placeholder="جستجو نام فروشگاه" id="myInput"
+                                           onkeyup="filterFunction()">
+
+                                    {% for store in stores %}
+                                        <a onclick='add_to_input("{{ store.store_name }}", "{{ store.id }}")'
+                                           {% if store.is_delete %}class="bg-secondary"{% endif %}>{{ store.store_name }}</a>
+                                    {% endfor %}
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <br/>
+
+
+                        <div class="row">
+                            <div class="col-12">
+                                {{ FilterOrderForm.store_name }}
+                            </div>
+                        </div>
+
+                        <br/>
+
+                        <div class="row">
+                            <div class="col-12">
+                                {{ FilterOrderForm.order_number }}
+                            </div>
+                        </div>
+
+                        <br/>
+
+                        <div class="row">
+                            <div class="col-6">
+                                {{ FilterOrderForm.from_date }}
+                            </div>
+
+                            <div class="col-6">
+                                {{ FilterOrderForm.to_date }}
+                            </div>
+                        </div>
+
+                        <br/>
+
+                        <div class="row">
+                            <div class="col-12">
+                                {{ FilterOrderForm.shipping_method }}
+                            </div>
+                        </div>
+
+                        <br/>
+
+                        <div class="row">
+                            <div class="col-12">
+                                {{ FilterOrderForm.document_defects }}
+                            </div>
+                        </div>
+
+                        <br/>
+
+                        <div class="row">
+                            <div class="col-8">
+                                <button class="btn btn-primary" type="submit" style="width: 100%">اعمال فیلتر</button>
+                            </div>
+                            <div class="col-4">
+                                <a class="btn btn-outline-secondary" href="{% url 'show-orders' %}" style="width: 100%">حذف
+                                    فیلتر</a>
+                                {#                                <button class="btn btn-outline-secondary" type="reset" style="width: 100%">حذف فیلتر</button>#}
+                            </div>
+                        </div>
+
+
+                    </form>
+
                 </div>
             </div>
         </div>
@@ -72,8 +180,12 @@
                                 <tr>
                                     <td>{{ order.store.store_name }}</td>
                                     <td>{{ order.order_number }}</td>
-                                    <td>{{ order.date }}</td>
+                                    {#                                    <td>{{ order.date }}</td>#}
+                                    <td>
+                                        {{ order.date|jformat:"%d / %m / %Y" }}
+                                    </td>
                                     <td>{{ order.time }}</td>
+
                                     <td>{{ order.shipping_method }}</td>
                                     {% if order.document_defects %}
                                         <td>{{ order.document_defects }}</td>
@@ -101,47 +213,50 @@
                 </div>
             </div>
 
-            <div class="row ">
+            {% if not is_filter %}
+                <div class="row ">
 
-                <div class="col-4"></div>
+                    <div class="col-4"></div>
 
-                <div class="col-4">
+                    <div class="col-4">
 
-                    <nav aria-label="Page navigation example">
+                        <nav aria-label="Page navigation example">
 
-                        <ul class="pagination justify-content-center">
+                            <ul class="pagination justify-content-center">
 
-                            {% if orders.has_previous %}
-                                <li class="page-item">
-                                    <a class="page-link" href="?page={{ orders.previous_page_number }}"
-                                       aria-label="Previous">
-                                        <span aria-hidden="true">&laquo;</span>
-                                        <span class="sr-only">Previous</span>
-                                    </a>
-                                </li>
-                            {% endif %}
+                                {% if orders.has_previous %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page={{ orders.previous_page_number }}"
+                                           aria-label="Previous">
+                                            <span aria-hidden="true">&laquo;</span>
+                                            <span class="sr-only">Previous</span>
+                                        </a>
+                                    </li>
+                                {% endif %}
 
-                            <li class="page-item"><a class="page-link active" href="#">{{ orders.number }}</a></li>
+                                <li class="page-item"><a class="page-link active" href="#">{{ orders.number }}</a></li>
 
-                            {% if orders.has_next %}
-                                <li class="page-item">
-                                    <a class="page-link" href="?page={{ orders.next_page_number }}" aria-label="Next">
-                                        <span aria-hidden="true">&raquo;</span>
-                                        <span class="sr-only">Next</span>
-                                    </a>
-                                </li>
+                                {% if orders.has_next %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page={{ orders.next_page_number }}"
+                                           aria-label="Next">
+                                            <span aria-hidden="true">&raquo;</span>
+                                            <span class="sr-only">Next</span>
+                                        </a>
+                                    </li>
 
-                            {% endif %}
+                                {% endif %}
 
 
-                        </ul>
-                    </nav>
+                            </ul>
+                        </nav>
+
+                    </div>
+
+                    <div class="col-4"></div>
 
                 </div>
-
-                <div class="col-4"></div>
-
-            </div>
+            {% endif %}
 
 
         </div>
