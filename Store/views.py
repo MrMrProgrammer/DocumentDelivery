@@ -31,16 +31,15 @@ class StoreRegisterView(View):
         return render(request, 'Store/add-store.html', context)
 
     def post(self, request):
-        print('post')
-
         register_form = StoreRegisterForm(request.POST)
 
         if register_form.is_valid():
             store_name = register_form.cleaned_data.get('store_name')
+            is_active = register_form.cleaned_data.get('is_active')
 
             new_store = Store(
                 store_name=store_name,
-                is_active=True,
+                is_active=is_active,
             )
 
             new_store.save()
@@ -77,7 +76,6 @@ class UpdateStoreView(View):
         return render(request, 'Store/update-store.html', context)
 
     def post(self, request: HttpRequest, store_id):
-
         current_store: Store = Store.objects.filter(id=store_id).first()
 
         edit_form = UpdateStoreForm(request.POST, request.FILES, instance=current_store)
