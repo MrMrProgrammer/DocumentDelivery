@@ -194,16 +194,11 @@ def delete_order(request: HttpRequest, order_id):
 
 
 @login_required
-def get_report(objects):
-    pass
-
-
-@login_required
 def filter_orders(request: HttpRequest):
     is_filter = True
 
     filter_order = filterOrderForm(request.POST)
-    stores = Store.objects.filter().all().order_by('-id')
+    stores = Store.objects.filter().all()
 
     if filter_order.is_valid():
         store_name = filter_order.cleaned_data.get('store_name')
@@ -233,44 +228,120 @@ def filter_orders(request: HttpRequest):
 
         orders_for_report = orders
 
-        print(type(orders))
-
         context = {
             'orders': orders,
             'FilterOrderForm': filter_order,
             'stores': stores,
             'is_filter': is_filter,
             'orders_for_report': orders_for_report,
-            'report_data': report_data
+            'report_data': report_data,
+
+            'store_name': store_name,
+            'order_number': order_number,
+            'from_date': from_date,
+            'to_date': to_date,
+            'shipping_method': shipping_method,
+            'document_defects': document_defects,
         }
 
         return render(request, 'Order/show-orders.html', context)
 
 
 @login_required
-def export_to_excel(request):
-    data = request.GET.get('data')
+def export_to_excel(request: HttpRequest):
+    if request.method == 'POST':
 
-    print(data)
+        store_name = request.POST.get('store_name')
+        order_number = request.POST.get('order_number')
+        print(order_number)
+        from_date = request.POST.get('from_date')
+        to_date = request.POST.get('to_date')
+        shipping_method = request.POST.get('shipping_method')
+        document_defects = request.POST.get('document_defects')
 
-    data = {
-        'Column1': [1, 2, 3, 4, 5, 6],
-        'Column2': ['A', 'B', 'C', 'D', 'E', 'F']
-    }
+        orders = Order.objects.filter(
+            Q(store_id=store_name) if store_name else Q(),
+            Q(order_number=order_number) if order_number else Q(),
+            # Q(from_date__gte=from_date) if from_date else Q(),
+            # Q(to_date__lte=to_date) if to_date else Q(),
+            Q(shipping_method__fa_name=shipping_method) if shipping_method else Q(),
+            Q(document_defects__contains=document_defects) if document_defects else Q(),
+        )
 
-    df = pd.DataFrame(data)
+        if len(orders) == 0:
+            orders = Order.objects.all()
 
-    report_folder = "Report"
-    if not os.path.exists(report_folder):
-        os.makedirs(report_folder)
+        # print(len(orders))
 
-    excel_filename = os.path.join(report_folder, f"Report.xlsx")
+        store_name = []
+        order_number = []
+        date = []
+        time = []
+        shipping_method = []
+        document_defects = []
 
-    df.to_excel(excel_filename, index=False)
+        # print(orders[0].order_number)
 
-    with open(excel_filename, 'rb') as excel_file:
-        response = HttpResponse(excel_file.read(),
-                                content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
-        response['Content-Disposition'] = f'attachment; filename={excel_filename}'
+        for order in orders:
+            store_name.append(order.store.store_name)
+            order_number.append(order.order_number)
+            date.append(order.date)
+            time.append(order.time)
+            shipping_method.append(order.shipping_method)
+            document_defects.append(order.document_defects)
 
-    return response
+        # print(store_name)
+
+        df = pd.DataFrame({'نام فروشگاه': store_name,
+                           'شماره سفارش': order_number,
+                           'تاریخ': date,
+                           'ساعت': time,
+                           'روش ارسال': shipping_method,
+                           'نقص مدارک': document_defects, })
+
+        report_folder = "Report"
+        if not os.path.exists(report_folder):
+            os.makedirs(report_folder)
+
+        excel_filename = os.path.join(report_folder, f"Report.xlsx")
+
+        df.to_excel(excel_filename, index=False)
+
+        # Read the Excel file and send the response
+        with open(excel_filename, 'rb') as excel_file:
+            response = HttpResponse(excel_file.read(),
+                                    content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+            response['Content-Disposition'] = f'attachment; filename={excel_filename}'
+
+        return response
+
+    # If the request is not POST, redirect to the form
+    return redirect('export_to_excel')
+
+    # # data = request.GET.get('data')
+    #
+    # data = request.GET.POST()
+    #
+    # print(request)
+    #
+    # data = {
+    #     'Column1': [1, 2, 3, 4, 5, 6],
+    #     'Column2': ['A', 'B', 'C', 'D', 'E', 'F']
+    # }
+    #
+    # df = pd.DataFrame(data)
+    #
+    # report_folder = "Report"
+    # if not os.path.exists(report_folder):
+    #     os.makedirs(report_folder)
+    #
+    # excel_filename = os.path.join(report_folder, f"Report.xlsx")
+    #
+    # df.to_excel(excel_filename, index=False)
+    #
+    # with open(excel_filename, 'rb') as excel_file:
+    #     response = HttpResponse(excel_file.read(),
+    #                             content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    #     response['Content-Disposition'] = f'attachment; filename={excel_filename}'
+    #
+    # return response
