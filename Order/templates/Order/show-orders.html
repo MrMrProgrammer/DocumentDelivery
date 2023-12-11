@@ -25,13 +25,24 @@
             <div class="row">
 
                 <div class="col-12">
-                    <form action="{% url 'export_to_excel' %}" method="get">
+                    <form action="{% url 'export_to_excel' %}" method="post">
                         {% csrf_token %}
-                        <button onclick="get_report()" class="btn btn-success" style="width: 100%">دانلود گزارش
-                        </button>
+
+                        <input type="text" name="store_name" value="{{ store_name }}">
+                        <input type="text" name="order_number" value="{{ order_number }}">
+                        <input type="text" name="from_date" value="{{ from_date }}">
+                        <input type="text" name="to_date" value="{{ to_date }}">
+                        <input type="text" name="shipping_method" value="{{ shipping_method }}">
+                        <input type="text" name="document_defects" value="{{ document_defects }}">
+
+                        <br/>
+                        
+{#                        <input type="text" value="{{ report_data }}" name="data">#}
+
+                        <button type="submit" class="btn btn-success" style="width: 100%">دانلود گزارش</button>
                     </form>
                     
-                    <button class="btn btn-success" style="width:100%" onclick="report()">دریافت گزارش</button>
+{#                    <button class="btn btn-success" style="width:100%" onclick="report()">دریافت گزارش</button>#}
                     
 
                 </div>
