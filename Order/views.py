@@ -123,7 +123,7 @@ class GetDocument(View):
 def show_order(request):
     is_filter = False
 
-    orders = Order.objects.all().order_by('-id')
+    orders = Order.objects.filter(is_delete=False).order_by('-id')
     orders_for_report = orders
 
     stores = Store.objects.filter().all()
@@ -189,7 +189,9 @@ class UpdateOrderView(View):
 
 @login_required
 def delete_order(request: HttpRequest, order_id):
-    order_obj = Order.objects.filter(id=order_id).delete()
+    order_obj = Order.objects.filter(id=order_id).first()
+    order_obj.is_delete = True
+    order_obj.save()
     return redirect('show-orders')
 
 
@@ -218,6 +220,7 @@ def filter_orders(request: HttpRequest):
         }
 
         orders = Order.objects.filter(
+            Q(is_delete=False),
             Q(store_id=store_name) if store_name else Q(),
             Q(order_number=order_number) if order_number else Q(),
             # Q(from_date__gte=from_date) if from_date else Q(),
@@ -251,7 +254,7 @@ def filter_orders(request: HttpRequest):
 def export_to_excel(request: HttpRequest):
     if request.method == 'POST':
 
-        store_name = request.POST.get('store_name')
+        store_id = request.POST.get('store_name')
         order_number = request.POST.get('order_number')
         print(order_number)
         from_date = request.POST.get('from_date')
@@ -260,18 +263,19 @@ def export_to_excel(request: HttpRequest):
         document_defects = request.POST.get('document_defects')
 
         orders = Order.objects.filter(
-            Q(store_id=store_name) if store_name else Q(),
+            Q(is_delete=False),
+            Q(store_id=store_id) if store_id else Q(),
             Q(order_number=order_number) if order_number else Q(),
-            # Q(from_date__gte=from_date) if from_date else Q(),
-            # Q(to_date__lte=to_date) if to_date else Q(),
+            # # Q(from_date__gte=from_date) if from_date else Q(),
+            # # Q(to_date__lte=to_date) if to_date else Q(),
             Q(shipping_method__fa_name=shipping_method) if shipping_method else Q(),
             Q(document_defects__contains=document_defects) if document_defects else Q(),
         )
 
+        print(len(orders))
+
         if len(orders) == 0:
             orders = Order.objects.all()
-
-        # print(len(orders))
 
         store_name = []
         order_number = []
@@ -280,8 +284,6 @@ def export_to_excel(request: HttpRequest):
         shipping_method = []
         document_defects = []
 
-        # print(orders[0].order_number)
-
         for order in orders:
             store_name.append(order.store.store_name)
             order_number.append(order.order_number)
@@ -289,8 +291,6 @@ def export_to_excel(request: HttpRequest):
             time.append(order.time)
             shipping_method.append(order.shipping_method)
             document_defects.append(order.document_defects)
-
-        # print(store_name)
 
         df = pd.DataFrame({'نام فروشگاه': store_name,
                            'شماره سفارش': order_number,
@@ -303,7 +303,8 @@ def export_to_excel(request: HttpRequest):
         if not os.path.exists(report_folder):
             os.makedirs(report_folder)
 
-        excel_filename = os.path.join(report_folder, f"Report.xlsx")
+        # excel_filename = os.path.join(report_folder, f"Report.xlsx")
+        excel_filename = os.path.join("Report.xlsx")
 
         df.to_excel(excel_filename, index=False)
 
@@ -315,7 +316,6 @@ def export_to_excel(request: HttpRequest):
 
         return response
 
-    # If the request is not POST, redirect to the form
     return redirect('export_to_excel')
 
     # # data = request.GET.get('data')

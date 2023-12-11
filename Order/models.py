@@ -22,3 +22,5 @@ class Order(models.Model):
     date = models.DateField(null=True, blank=True)
     time = models.TimeField(null=True, blank=True)
     document_defects = models.CharField(max_length=200, blank=True, null=True)
+    is_delete = models.BooleanField(default=False)
+
