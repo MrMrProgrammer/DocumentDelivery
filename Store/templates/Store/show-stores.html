@@ -41,23 +41,23 @@
 
                                     <td>
                                         {% if store.is_active %}
-                                            <img class="icon" src="{% static 'icons/icons8-checkmark-64.png' %}" />
+                                            <img style="width:18%;" src="{% static 'icons/icons8-checkmark-64.png' %}" />
                                         {% else %}
-                                            <img class="icon" src="{% static 'icons/icons8-no-64.png' %}">
+                                            <img style="width:18%;" src="{% static 'icons/icons8-no-64.png' %}">
                                         {% endif %}
                                     </td>
 
                                     <td>
                                         <a href="{% url 'update-store' store_id=store.id %}">
                                             {# href="{% url 'update_order' order_id=order.id %}"#}
-                                            <img class="icon" src="{% static 'Order/image/edit-icon.png' %}"/>
+                                            <img class="icon" src="{% static 'icons/edit-icon.png' %}"/>
                                         </a>
                                     </td>
 
                                     <td>
                                         <a href="{% url 'delete-store' store_id=store.id %}">
                                             {# href="{% url 'delete_order' order_id=order.id %}"#}
-                                            <img class="icon" src="{% static 'Order/image/delete-icon.png' %}"/>
+                                            <img class="icon" src="{% static 'icons/delete-icon.png' %}"/>
                                         </a>
                                     </td>
 

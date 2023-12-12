@@ -213,6 +213,7 @@ def filter_orders(request: HttpRequest):
         from_date = filter_order.cleaned_data['from_date']
         to_date = filter_order.cleaned_data['to_date']
         shipping_method = filter_order.cleaned_data['shipping_method']
+        print(type(shipping_method))
         document_defects = filter_order.cleaned_data['document_defects']
 
         report_data = {
@@ -264,12 +265,21 @@ def export_to_excel(request: HttpRequest):
     if request.method == 'POST':
 
         store_id = request.POST.get('store_name')
+        print(store_id)
+
         order_number = request.POST.get('order_number')
         print(order_number)
+
         from_date = request.POST.get('from_date')
         to_date = request.POST.get('to_date')
+
         shipping_method = request.POST.get('shipping_method')
+        if type(shipping_method) == str :
+            shipping_method = None
+
         document_defects = request.POST.get('document_defects')
+        print(document_defects)
+
 
         orders = Order.objects.filter(
             Q(is_delete=False),
@@ -277,11 +287,11 @@ def export_to_excel(request: HttpRequest):
             Q(order_number=order_number) if order_number else Q(),
             # # Q(from_date__gte=from_date) if from_date else Q(),
             # # Q(to_date__lte=to_date) if to_date else Q(),
-            Q(shipping_method__fa_name=shipping_method) if shipping_method else Q(),
+            Q(shipping_method=shipping_method) if shipping_method else Q(),
             Q(document_defects__contains=document_defects) if document_defects else Q(),
         )
 
-        print(len(orders))
+        print("Len : ", len(orders))
 
         if len(orders) == 0:
             orders = Order.objects.all()
