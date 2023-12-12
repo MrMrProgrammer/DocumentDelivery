@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="{% static 'css/Order/show-orders.css' %}"/>
 
     <script src="{% static 'js/Order/add-order-script.js' %}"></script>
-    
+
 {% endblock %}
 
 {% block mian %}
@@ -20,7 +20,7 @@
             {% if is_filter %}
                 <div class="row">
 
-                    <div class="col-12">
+                    <div class="col-12 action_box">
                         <form action="{% url 'export_to_excel' %}" method="post">
                             {% csrf_token %}
 
@@ -133,7 +133,8 @@
                         <div class="row">
 
                             <div class="col-5">
-                                <a class="btn btn-outline-secondary" href="{% url 'show-orders' %}" style="width: 100%">حذف فیلتر</a>
+                                <a class="btn btn-outline-secondary" href="{% url 'show-orders' %}" style="width: 100%">حذف
+                                    فیلتر</a>
                             </div>
 
                             <div class="col-7">
@@ -147,6 +148,18 @@
 
                 </div>
             </div>
+
+            {% if is_filter %}
+                <br/>
+
+                <div class="row">
+                    <div class="col-12 action_box">
+                        <p style="margin: 0; color: black">تعداد سفارش‌های یافت شده : {{ orders|length }}</p>
+                    </div>
+
+                </div>
+            {% endif %}
+
         </div>
 
         <br/>
@@ -154,7 +167,6 @@
 
         <div class="col-md-9 text-center">
             <h1>مدارک ثبت شده{% if is_filter %} (فیلتر شده) {% endif %}</h1>
-
 
 
             <br/>
