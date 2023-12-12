@@ -365,8 +365,3 @@ def export_to_excel(request: HttpRequest):
     #
     # df.to_excel(excel_filename, index=False)
     #
-    # with open(excel_filename, 'rb') as excel_file:
-    #     response = HttpResponse(excel_file.read(),
-    #                             content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
-    #     response['Content-Disposition'] = f'attachment; filename={excel_filename}'
-
