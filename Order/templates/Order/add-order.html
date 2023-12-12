@@ -7,13 +7,13 @@
     <link rel="stylesheet" href="{% static 'css/Order/add-order-style.css' %}"/>
     <script src="{% static 'js/Order/add-order-script.js' %}"></script>
 
-{#    <link rel="stylesheet" href="https://unpkg.com/@majidh1/jalalidatepicker/dist/jalalidatepicker.min.css">#}
-{#    <script type="text/javascript" src="https://unpkg.com/@majidh1/jalalidatepicker/dist/jalalidatepicker.min.js"></script>#}
-{##}
-{#    <link type="text/css" rel="stylesheet" href="/home/user/Desktop/MrMr/Repository/DocumentDelivery/static/JalaliDatePicker/jalalidatepicker.css" />#}
-{#    <script type="text/javascript" src="/home/user/Desktop/MrMr/Repository/DocumentDelivery/static/JalaliDatePicker/jalalidatepicker.js"></script>#}
+    {#    <link rel="stylesheet" href="https://unpkg.com/@majidh1/jalalidatepicker/dist/jalalidatepicker.min.css">#}
+    {#    <script type="text/javascript" src="https://unpkg.com/@majidh1/jalalidatepicker/dist/jalalidatepicker.min.js"></script>#}
+    {##}
+    {#    <link type="text/css" rel="stylesheet" href="/home/user/Desktop/MrMr/Repository/DocumentDelivery/static/JalaliDatePicker/jalalidatepicker.css" />#}
+    {#    <script type="text/javascript" src="/home/user/Desktop/MrMr/Repository/DocumentDelivery/static/JalaliDatePicker/jalalidatepicker.js"></script>#}
 
-    <link type="text/css" rel="stylesheet" href="{% static 'JalaliDatePicker/jalalidatepicker.css' %}" />
+    <link type="text/css" rel="stylesheet" href="{% static 'JalaliDatePicker/jalalidatepicker.css' %}"/>
     <script type="text/javascript" src="{% static 'JalaliDatePicker/jalalidatepicker.js' %}"></script>
 
 
@@ -25,106 +25,118 @@
         <div class="col-md-2"></div>
 
         <div class="col-md-8">
-            <form action="" method="post">
-                {% csrf_token %}
 
-                <br/>
+            <div id="form">
+                <form action="" method="post">
+                    {% csrf_token %}
 
-                <div class="row">
-                    <div class="col-10">
-                        {{ register_form.store_name }}
-                        <input type="text" placeholder="نام فروشگاه" class="form-control" readonly id="fake_store_id_input" required>
-                    </div>
-                    <div class="col-2 text-right">
-                        <button type="button" onclick="remove_from_input()" id="remove-btn">
-                            <img id="remove-icon" src="{% static 'icon/icons8-delete-48.png' %}">
-                        </button>
-                    </div>
-                </div>
+                    <br/>
 
-                <br/>
-
-                <div class="row">
-                    <div class="col-12">
-
-                        <button type="button" onclick="show_stores()" class="btn btn-primary" id="search-btn">جستجو نام فروشگاه</button>
-
-                        <div id="myDropdown" class="dropdown-content">
-                            <input type="text" placeholder="جستجو نام فروشگاه" id="myInput" onkeyup="filterFunction()">
-
-                            {% for store in stores %}
-                                <a onclick='add_to_input("{{ store.store_name }}", "{{ store.id }}")' style="color:red;" {% if not store.is_active %}class="bg-danger"{% endif %}>{{ store.store_name }}</a>
-                            {% endfor %}
-                        
+                    <div class="row">
+                        <div class="col-10">
+                            {{ register_form.store_name }}
+                            <input type="text" placeholder="نام فروشگاه" class="form-control" readonly
+                                   id="fake_store_id_input" required>
                         </div>
-
+                        <div class="col-2 text-right">
+                            <button type="button" onclick="remove_from_input()" id="remove-btn">
+                                <img id="remove-icon" src="{% static 'icon/icons8-delete-48.png' %}">
+                            </button>
+                        </div>
                     </div>
-                </div>
 
-                <br/>
+                    <br/>
 
-                <div class="row">
-                    <div class="col-12">
-                        {{ register_form.order_number }}
-                    </div>
-                </div>
+                    <div class="row">
+                        <div class="col-12">
 
-                <br/>
+                            <button type="button" onclick="show_stores()" class="btn btn-primary" id="search-btn">جستجو
+                                نام فروشگاه
+                            </button>
 
-                <div class="row">
-                    <div class="col-4 text-right">
-                        <h5>روش دریافت:</h5>
-                    </div>
-                    <div class="col-8 text-right">
-                        <div class="row">
-                            <div class="col-6">
-                                {{ register_form.shipping_method }}
+                            <div id="myDropdown" class="dropdown-content">
+                                <input type="text" placeholder="جستجو نام فروشگاه" id="myInput"
+                                       onkeyup="filterFunction()">
+
+                                {% for store in stores %}
+                                    <a onclick='add_to_input("{{ store.store_name }}", "{{ store.id }}")'
+                                       style="color:red;"
+                                       {% if not store.is_active %}class="bg-danger"{% endif %}>{{ store.store_name }}</a>
+                                {% endfor %}
+
                             </div>
-                            <div class="col-6"></div>
 
                         </div>
                     </div>
-                </div>
 
-                <br/>
+                    <br/>
 
-                {{ register_form.description }}
-
-                <br/>
-
-                <div class="row text-center">
-
-                    <div class="col-2"></div>
-
-                    <div class="col-4">
-                        <input type="text" placeholder="تاریخ را وارد کنید" class="form-control" data-jdp />
+                    <div class="row">
+                        <div class="col-12">
+                            {{ register_form.order_number }}
+                        </div>
                     </div>
 
-                    <div class="col-4">
-                        <input type="time" class="form-control" placeholder="ساعت را وارد کنید" />
+                    <br/>
+
+                    <div class="row">
+                        <div class="col-4 text-right">
+                            <h5>روش دریافت:</h5>
+                        </div>
+                        <div class="col-8 text-right">
+                            <div class="row">
+                                <div class="col-6">
+                                    {{ register_form.shipping_method }}
+                                </div>
+                                <div class="col-6"></div>
+
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="col-2"></div>
-
-                </div>
-
-                <br/>
-
-                <div class="row">
-                    <div class="col-md-6">
-                        <button type="submit" class="btn btn-success" id="sub-btn">ذخیره</button>
-                        <a class="btn btn-outline-secondary" id="unactive-sub-btn">ذخیره</a>
-                    </div>
                     <br/>
                     <br/>
-                    <div class="col-md-6">
-                        <button type="submit" class="btn btn-primary" id="sub-btn-again">ذخیره و ایجاد دیگری</button>
-                        <a type="submit" class="btn btn-outline-secondary" id="unactive-sub-btn-again">ذخیره و ایجاد دیگری</a>
+
+                    <div class="row text-center">
+
+                        <div class="col-2"></div>
+
+                        <div class="col-4">
+
+
+                            <input type="text" placeholder="تاریخ را وارد کنید" class="form-control" data-jdp/>
+                        </div>
+
+                        <div class="col-4">
+                            <input type="time" class="form-control" placeholder="ساعت را وارد کنید"/>
+                        </div>
+
+                        <div class="col-2"></div>
+
                     </div>
 
-                </div>
+                    <br/>
+                    <br/>
 
-            </form>
+                    <div class="row text-center">
+                        <div class="col-md-6">
+                            <button type="submit" class="btn btn-success btns" id="sub-btn">ذخیره</button>
+                            <a class="btn btn-outline-secondary btns" id="unactive-sub-btn">ذخیره</a>
+                        </div>
+                        <br/>
+                        <br/>
+                        <div class="col-md-6">
+                            <button type="submit" class="btn btn-primary btns" id="sub-btn-again">ذخیره و ایجاد دیگری
+                            </button>
+                            <a type="submit" class="btn btn-outline-secondary btns" id="unactive-sub-btn-again">ذخیره و ایجاد
+                                دیگری</a>
+                        </div>
+
+                    </div>
+
+                </form>
+            </div>
+
         </div>
 
         <div class="col-md-2"></div>
