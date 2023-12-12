@@ -13,6 +13,7 @@ from django.http import HttpResponse
 import pandas as pd
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 import os
+from jalali_date import date2jalali
 
 
 def list_cleaner(input_list):
@@ -126,6 +127,8 @@ def show_order(request):
     orders = Order.objects.filter(is_delete=False).order_by('-id')
     orders_for_report = orders
 
+    orders_len = len(orders)
+
     stores = Store.objects.filter().all()
 
     filter_order = filterOrderForm(request.POST)
@@ -147,7 +150,9 @@ def show_order(request):
         'FilterOrderForm': filter_order,
         'stores': stores,
         'is_filter': is_filter,
-        'orders_for_report': orders_for_report
+        'orders_for_report': orders_for_report,
+
+        'orders_len': orders_len,
     }
 
     return render(request, 'Order/show-orders.html', context)
@@ -231,6 +236,8 @@ def filter_orders(request: HttpRequest):
 
         orders_for_report = orders
 
+        orders_len = len(orders)
+
         context = {
             'orders': orders,
             'FilterOrderForm': filter_order,
@@ -245,6 +252,8 @@ def filter_orders(request: HttpRequest):
             'to_date': to_date,
             'shipping_method': shipping_method,
             'document_defects': document_defects,
+
+            'orders_len': orders_len,
         }
 
         return render(request, 'Order/show-orders.html', context)
@@ -286,10 +295,17 @@ def export_to_excel(request: HttpRequest):
 
         for order in orders:
             store_name.append(order.store.store_name)
+
             order_number.append(order.order_number)
-            date.append(order.date)
-            time.append(order.time)
+
+            jalali_date = date2jalali(order.date)
+            date.append(jalali_date)
+
+            st_time = order.time.strftime("%H:%M")
+            time.append(st_time)
+
             shipping_method.append(order.shipping_method)
+
             document_defects.append(order.document_defects)
 
         df = pd.DataFrame({'نام فروشگاه': store_name,
