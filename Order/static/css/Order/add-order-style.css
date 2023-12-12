@@ -25,6 +25,17 @@
     display: none;
 }
 
+#form {
+    background-color: #f6f6f6;
+    padding: 20px;
+    border-radius: 15px;
+    border: 1px solid gainsboro;
+}
+
+.btns {
+    width: 80%;
+}
+
 /*=========================================================*/
 
 #myDropdown{
