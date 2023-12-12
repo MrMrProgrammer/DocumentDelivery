@@ -99,22 +99,24 @@ class filterOrderForm(forms.Form):
         widget=forms.TextInput(attrs={
             'class': 'form-control',
             'placeholder': 'شماره سفارش',
-            'required': False
         }))
 
     from_date = forms.CharField(
         required=False,
         widget=forms.TextInput(attrs={
             'class': 'form-control',
-            'placeholder': 'از تاریخ',
+            # 'placeholder': 'از تاریخ',
+            'placeholder': 'از تاریخ(درحال توسعه)',
+            'readonly': 'readonly'
         }))
 
     to_date = forms.CharField(
         required=False,
         widget=forms.TextInput(attrs={
             'class': 'form-control',
-            'placeholder': 'تا تاریخ',
-            'required': False
+            # 'placeholder': 'تا تاریخ',
+            'placeholder': 'تا تاریخ(درحال توسعه)',
+            'readonly': 'readonly'
         }))
 
     shipping_method = forms.ModelChoiceField(
