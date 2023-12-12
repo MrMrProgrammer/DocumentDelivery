@@ -29,21 +29,18 @@ class OrderForm(forms.Form):
 
     shipping_method = forms.ModelChoiceField(
         queryset=ShippingMethod.objects.all(),
-         empty_label="روش ارسال",
-         widget=forms.Select(attrs={
-             'class': 'form-control'
-         }),
+        empty_label="روش ارسال",
+        widget=forms.Select(attrs={
+            'class': 'form-control'
+        }),
     )
 
-    # widget=forms.RadioSelect
-    # description = forms.CharField(
-    #     label='توضیحات',
+    # date = forms.CharField(
     #     required=False,
     #     widget=forms.Textarea(attrs=
     #     {
     #         'class': 'form-control',
-    #         'placeholder': 'توضیحات',
-    #         'rows': 5
+    #         'placeholder': 'تاریخ'
     #     }),
     # )
 
