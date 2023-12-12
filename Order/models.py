@@ -14,6 +14,10 @@ class ShippingMethod(models.Model):
     class Meta:
         verbose_name = "Shipping Method"
 
+    class Meta:
+        verbose_name = 'Shipping Method'
+        
+
 
 class Order(models.Model):
     store = models.ForeignKey(Store, on_delete=models.CASCADE)
@@ -23,4 +27,7 @@ class Order(models.Model):
     time = models.TimeField(null=True, blank=True)
     document_defects = models.CharField(max_length=200, blank=True, null=True)
     is_delete = models.BooleanField(default=False)
+
+    class Meta:
+        verbose_name = "Order"
 

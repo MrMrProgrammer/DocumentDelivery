@@ -13,4 +13,3 @@ class Store(models.Model):
 
     class Meta:
         db_table = 'Store'
-
