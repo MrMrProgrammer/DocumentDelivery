@@ -14,18 +14,16 @@ class StoreRegisterForm(forms.Form):
     is_active = forms.BooleanField(required=False)
 
 
-
 class UpdateStoreForm(forms.ModelForm):
-
     class Meta:
         model = Store
         fields = ["store_name", "is_active"]
 
-    # is_active = forms.BooleanField(required=False, label='فعال / غیرفعال')
-    # # food_photo = forms.ImageField(required=False, widget=forms.FileInput)
+        # is_active = forms.BooleanField(required=False, label='فعال / غیرفعال')
+        # # food_photo = forms.ImageField(required=False, widget=forms.FileInput)
 
-    # class Meta:
-    #     model = Store
+        # class Meta:
+        #     model = Store
         # fields = ['food_photo', 'food_name', 'food_price', 'food_recipe', 'is_active']
 
         widgets = {
@@ -45,6 +43,7 @@ class UpdateStoreForm(forms.ModelForm):
             'store_name': 'نام فروشگاه',
             'is_active': 'فعال / غیرفعال'
         }
+
 
 # class UpdateStoreForm(forms.ModelForm):
 #
@@ -84,3 +83,19 @@ class UpdateStoreForm(forms.ModelForm):
 #         #     'is_active': 'فعال / غیرفعال',
 #         #     'food_photo': 'عکس غذا'
 #         # }
+
+
+class FilterStoreForm(forms.Form):
+    store_name = forms.CharField(
+        label='نام فروشگاه',
+        required=False,
+        widget=forms.TextInput(attrs=
+        {
+            'class': 'form-control',
+            'placeholder': 'نام فروشگاه',
+            'id': 'store_id_input',
+            'readonly': 'readonly',
+            'type': 'hidden',
+            'rows': 3,
+        }),
+    )
