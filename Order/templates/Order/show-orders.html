@@ -214,7 +214,7 @@
                                     </td>
 
                                     <td>
-                                        <a href="{% url 'delete_order' order_id=order.id %}">
+                                        <a href="{% url 'delete_order' order_id=order.id %}" onclick="confirmDelete(event)">
                                             <img class="icon" src="{% static 'Order/image/delete-icon.png' %}"/>
                                         </a>
                                     </td>
@@ -277,5 +277,14 @@
         </div>
 
     </div>
+
+    <script>
+        function confirmDelete(event) {
+            var result = confirm("آیا از حذف این سفارش اطمینان دارید؟");
+            if (!result) {
+                event.preventDefault();
+            }
+        }
+    </script>
 
 {% endblock %}
