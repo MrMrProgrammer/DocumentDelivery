@@ -2,18 +2,84 @@
 {% load static %}
 
 {% block header-link %}
+    <link rel="stylesheet" href="{% static 'css/Order/show-orders.css' %}"/>
     <link rel="stylesheet" href="{% static 'css/Store/show-stores-style.css' %}">
+    <script src="{% static 'js/Order/add-order-script.js' %}"></script>
 {% endblock %}
 
-{% block page-title %}لیست فروشگاه ها{% endblock %}
+{% block page-title %}مشاهده فروشگاه ها{% endblock %}
 
 {% block mian %}
 
     <div class="row">
+        <div class="col-md-3">
+            <div class="row">
+                <div class="col-12 action_box">
+                    <form method="post" action="{% url 'filter_stores' %}">
+                        {% csrf_token %}
 
-        <div class="col-md-2"></div>
+                        <div class="row">
+                            <div class="col-10">
+                                {{ filterStoreForm.store_name }}
 
-        <div class="col-md-8 text-center">
+                                <input type="text" placeholder="نام فروشگاه" class="form-control" readonly id="fake_store_id_input" required/>
+                            </div>
+
+                            <div class="col-2">
+                                <button type="button" onclick="remove_from_input()" id="remove-btn">
+                                    <img id="remove-icon" src="{% static 'icon/icons8-delete-48.png' %}">
+                                </button>
+                            </div>
+
+                        </div>
+
+                        <br/>
+
+                        <div class="row">
+                            <div class="col-12">
+
+                                <button type="button" onclick="show_stores()" class="btn btn-primary" id="search-btn"
+                                        style="width: 100%">
+                                    جستجو نام فروشگاه
+                                </button>
+
+                                <div id="myDropdown" class="dropdown-content">
+                                    <input type="text" placeholder="جستجو نام فروشگاه" id="myInput"
+                                           onkeyup="filterFunction()">
+
+                                    {% for store in stores %}
+                                        <a onclick='add_to_input("{{ store.store_name }}", "{{ store.id }}")'
+                                           {% if store.is_delete %}class="bg-secondary"{% endif %}
+                                           style="cursor:pointer">{{ store.store_name }}</a>
+                                    {% endfor %}
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <br/>
+
+                        <div class="row">
+
+                            <div class="col-5">
+                                <a class="btn btn-outline-secondary" href="{% url 'show-store' %}" style="width: 100%">حذف
+                                    فیلتر</a>
+                            </div>
+
+                            <div class="col-7">
+                                <button class="btn btn-primary" type="submit" style="width: 100%">اعمال فیلتر</button>
+                            </div>
+
+                        </div>
+
+
+                    </form>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-9 text-center">
 
             <h1>لیست فروشگاه ها</h1>
 
@@ -35,29 +101,29 @@
 
                             <tbody>
 
-                            {% for store in stores %}
+                            {% for store in found_stores %}
                                 <tr>
                                     <td>{{ store.store_name }}</td>
 
                                     <td>
                                         {% if store.is_active %}
-                                            <img style="width:18%;" src="{% static 'icons/icons8-checkmark-64.png' %}" />
+                                            <img class="icon" src="{% static 'icons/icons8-checkmark-64.png' %}"/>
                                         {% else %}
-                                            <img style="width:18%;" src="{% static 'icons/icons8-no-64.png' %}">
+                                            <img class="icon" src="{% static 'icons/icons8-no-64.png' %}">
                                         {% endif %}
                                     </td>
 
                                     <td>
                                         <a href="{% url 'update-store' store_id=store.id %}">
                                             {# href="{% url 'update_order' order_id=order.id %}"#}
-                                            <img class="icon" src="{% static 'icons/edit-icon.png' %}"/>
+                                            <img class="icon" src="{% static 'Order/image/edit-icon.png' %}"/>
                                         </a>
                                     </td>
 
                                     <td>
                                         <a href="{% url 'delete-store' store_id=store.id %}">
                                             {# href="{% url 'delete_order' order_id=order.id %}"#}
-                                            <img class="icon" src="{% static 'icons/delete-icon.png' %}"/>
+                                            <img class="icon" src="{% static 'Order/image/delete-icon.png' %}"/>
                                         </a>
                                     </td>
 
@@ -70,9 +136,6 @@
                 </div>
             </div>
         </div>
-
-        <div class="col-md-2"></div>
-
 
     </div>
 
