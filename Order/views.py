@@ -362,6 +362,3 @@ def export_to_excel(request: HttpRequest):
     #     os.makedirs(report_folder)
     #
     # excel_filename = os.path.join(report_folder, f"Report.xlsx")
-    #
-    # df.to_excel(excel_filename, index=False)
-    #
