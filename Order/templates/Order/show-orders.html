@@ -2,13 +2,11 @@
 {% load static %}
 {% load jformat %}
 
-{% block page-title %}مشاهده مدارک{% endblock %}
+{% block page-title %}مشاهده سفارش ها{% endblock %}
 
 {% block header-link %}
     <link rel="stylesheet" href="{% static 'css/Order/show-orders.css' %}"/>
-
     <script src="{% static 'js/Order/add-order-script.js' %}"></script>
-
 {% endblock %}
 
 {% block mian %}
@@ -79,7 +77,7 @@
 
                                     {% for store in stores %}
                                         <a onclick='add_to_input("{{ store.store_name }}", "{{ store.id }}")'
-                                           {% if store.is_delete %}class="bg-secondary"{% endif %}>{{ store.store_name }}</a>
+                                           {% if store.is_delete %}class="bg-secondary"{% endif %} style="cursor:pointer">{{ store.store_name }}</a>
                                     {% endfor %}
                                 </div>
 
@@ -156,7 +154,7 @@
                     <p style="margin: 0; color: black">تعداد سفارش‌های یافت شده : {{ orders_len }}</p>
                 </div>
             </div>
-        <small></small>
+            <small></small>
 
         </div>
 
@@ -216,7 +214,7 @@
                                     </td>
 
                                     <td>
-                                        <a href="{% url 'delete_order' order_id=order.id %}">
+                                        <a href="{% url 'delete_order' order_id=order.id %}" onclick="confirmDelete(event)">
                                             <img class="icon" src="{% static 'Order/image/delete-icon.png' %}"/>
                                         </a>
                                     </td>
@@ -279,5 +277,14 @@
         </div>
 
     </div>
+
+    <script>
+        function confirmDelete(event) {
+            var result = confirm("آیا از حذف این سفارش اطمینان دارید؟");
+            if (!result) {
+                event.preventDefault();
+            }
+        }
+    </script>
 
 {% endblock %}

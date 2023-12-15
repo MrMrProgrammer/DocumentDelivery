@@ -5,7 +5,7 @@
 
 <head>
 
-    <title>{% block page-title %}واسپاری تجار ایرانیان{% endblock %}</title>
+    <title>{% block page-title %}{% endblock %} | واسپاری تجار ایرانیان</title>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -148,10 +148,13 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent" style="direction: rtl">
                     <ul class="nav navbar-nav ml-auto">
                         <li class="nav-item active">
-                            <a class="nav-link" href="{% url 'home' %}">صفحه اصلی</a>
+                            <a class="nav-link text-danger" href="{% url 'logout' %}">خروج</a>
                         </li>
                         <li class="nav-item active">
                             <a class="nav-link" href="{% url 'add-order' %}">ثبت سفارش</a>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link" href="{% url 'home' %}">صفحه اصلی</a>
                         </li>
                     </ul>
                 </div>
