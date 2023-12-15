@@ -79,6 +79,9 @@ class GetDocument(View):
 
                 elif '-' in order:
                     data = order.split('-')
+
+                    data = list_cleaner(data)
+
                     if data[0].isdigit():
                         new_doc = Order(
                             store_id=store,
