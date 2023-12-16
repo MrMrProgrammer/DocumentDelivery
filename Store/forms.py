@@ -99,3 +99,19 @@ class FilterStoreForm(forms.Form):
             'rows': 3,
         }),
     )
+
+    IS_ACTIVE_CHOICES = [
+        (None, '----'),
+        (True, 'فعال'),
+        (False, 'غیرفعال'),
+    ]
+
+    is_active = forms.ChoiceField(
+        label='فروشگاه فعال / غیرفعال',
+        choices=IS_ACTIVE_CHOICES,
+        required=False,
+        widget=forms.Select(attrs={
+            'class': 'form-control',
+            'id': 'is_active',
+        }),
+    )
