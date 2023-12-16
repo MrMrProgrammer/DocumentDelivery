@@ -61,6 +61,17 @@
                         <br/>
 
                         <div class="row">
+                            <div class="col-12 text-right">
+
+                                <label for="is_active">فروشگاه فعال / غیرفعال :</label>
+                                {{ filterStoreForm.is_active }}
+
+                            </div>
+                        </div>
+
+                        <br/>
+
+                        <div class="row">
 
                             <div class="col-5">
                                 <a class="btn btn-outline-secondary" href="{% url 'show-store' %}" style="width: 100%">حذف
@@ -72,7 +83,6 @@
                             </div>
 
                         </div>
-
 
                     </form>
 
