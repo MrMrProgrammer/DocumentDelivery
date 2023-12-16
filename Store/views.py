@@ -11,7 +11,6 @@ from django.db.models import Q
 
 @login_required
 def show_store(request):
-
     filter_store = FilterStoreForm(request.POST)
 
     stores = Store.objects.all()
@@ -111,9 +110,12 @@ def filter_stores(request: HttpRequest):
     if filter_store.is_valid():
         store_name = filter_store.cleaned_data.get('store_name')
 
+        is_active = filter_store.cleaned_data.get('is_active')
+
         found_stores = Store.objects.filter(
             Q(is_delete=False),
             Q(id=store_name) if store_name else Q(),
+            Q(is_active=is_active) if is_active else Q(),
         )
 
         context = {
