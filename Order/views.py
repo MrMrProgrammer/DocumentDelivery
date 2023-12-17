@@ -356,8 +356,4 @@ def export_to_excel(request: HttpRequest):
     #
     # df = pd.DataFrame(data)
     #
-    # report_folder = "Report"
-    # if not os.path.exists(report_folder):
-    #     os.makedirs(report_folder)
-    #
-    # excel_filename = os.path.join(report_folder, f"Report.xlsx")
+
