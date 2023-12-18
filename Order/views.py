@@ -353,7 +353,4 @@ def export_to_excel(request: HttpRequest):
     #     'Column1': [1, 2, 3, 4, 5, 6],
     #     'Column2': ['A', 'B', 'C', 'D', 'E', 'F']
     # }
-    #
-    # df = pd.DataFrame(data)
-    #
 
