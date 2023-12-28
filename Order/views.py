@@ -346,7 +346,6 @@ def export_to_excel(request: HttpRequest):
     # # data = request.GET.get('data')
     #
     # data = request.GET.POST()
-    #
 
 
 
