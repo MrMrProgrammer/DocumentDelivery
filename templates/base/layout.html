@@ -27,6 +27,10 @@
 
     <script src="{% static 'js/main.js' %}"></script>
 
+    <link rel="stylesheet" href="https://unpkg.com/@majidh1/jalalidatepicker/dist/jalalidatepicker.min.css">
+    <script type="text/javascript"
+            src="https://unpkg.com/@majidh1/jalalidatepicker/dist/jalalidatepicker.min.js"></script>
+
 
     {% block header-link %}{% endblock %}
 
@@ -171,6 +175,10 @@
 <script src="{% static 'js/bootstrap.min.js' %}"></script>
 
 <script src="{% static 'js/main.js' %}"></script>
+
+<script>
+    jalaliDatepicker.startWatch();
+</script>
 
 </body>
 </html>
