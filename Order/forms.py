@@ -105,18 +105,18 @@ class filterOrderForm(forms.Form):
         required=False,
         widget=forms.TextInput(attrs={
             'class': 'form-control',
-            # 'placeholder': 'از تاریخ',
-            'placeholder': 'از تاریخ(درحال توسعه)',
-            'readonly': 'readonly'
+            'placeholder': 'از تاریخ',
+            'data-jdp': 'data-jdp',
+            "autocomplete": "off",
         }))
 
     to_date = forms.CharField(
         required=False,
         widget=forms.TextInput(attrs={
             'class': 'form-control',
-            # 'placeholder': 'تا تاریخ',
-            'placeholder': 'تا تاریخ(درحال توسعه)',
-            'readonly': 'readonly'
+            'placeholder': 'تا تاریخ',
+            'data-jdp': 'data-jdp',
+            "autocomplete": "off",
         }))
 
     shipping_method = forms.ModelChoiceField(
