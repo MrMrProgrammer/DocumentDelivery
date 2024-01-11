@@ -342,5 +342,3 @@ def export_to_excel(request: HttpRequest):
         return response
 
     return redirect('export_to_excel')
-
-    # # data = request.GET.get('data')
