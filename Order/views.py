@@ -7,13 +7,20 @@ from .models import Order
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from Store.models import Store
-from django.http import HttpRequest, HttpResponse
+from django.http import HttpRequest
 from .forms import UpdateOrderForm, filterOrderForm
 from django.http import HttpResponse
 import pandas as pd
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 import os
 from jalali_date import date2jalali
+
+
+def jalali_to_gregorian(jalali_date):
+    from jdatetime import datetime
+    jalali_datetime = datetime.strptime(jalali_date, "%Y/%m/%d").date()
+    gregorian_datetime = jalali_datetime.togregorian()
+    return gregorian_datetime
 
 
 def list_cleaner(input_list):
@@ -208,32 +215,38 @@ def filter_orders(request: HttpRequest):
     is_filter = True
 
     filter_order = filterOrderForm(request.POST)
-    stores = Store.objects.filter().all()
+    stores = Store.objects.all()
 
     if filter_order.is_valid():
         store_name = filter_order.cleaned_data.get('store_name')
         order_number = filter_order.cleaned_data['order_number']
+
         from_date = filter_order.cleaned_data['from_date']
+        if from_date != '':
+            from_date = jalali_to_gregorian(from_date)
+
         to_date = filter_order.cleaned_data['to_date']
+        if to_date != '':
+            to_date = jalali_to_gregorian(to_date)
+
         shipping_method = filter_order.cleaned_data['shipping_method']
-        print(type(shipping_method))
         document_defects = filter_order.cleaned_data['document_defects']
 
-        report_data = {
-            'store_name': store_name,
-            'order_number': order_number,
-            'from_date': from_date,
-            'to_date': to_date,
-            'shipping_method': shipping_method,
-            'document_defects': document_defects,
-        }
+        # report_data = {
+        #     'store_name': store_name,
+        #     'order_number': order_number,
+        #     'from_date': from_date,
+        #     'to_date': to_date,
+        #     'shipping_method': shipping_method,
+        #     'document_defects': document_defects,
+        # }
 
         orders = Order.objects.filter(
             Q(is_delete=False),
             Q(store_id=store_name) if store_name else Q(),
             Q(order_number=order_number) if order_number else Q(),
-            # Q(from_date__gte=from_date) if from_date else Q(),
-            # Q(to_date__lte=to_date) if to_date else Q(),
+            Q(date__gte=from_date) if from_date else Q(),
+            Q(date__lte=to_date) if to_date else Q(),
             Q(shipping_method=shipping_method) if shipping_method else Q(),
             Q(document_defects__contains=document_defects) if document_defects else Q(),
         )
@@ -247,8 +260,8 @@ def filter_orders(request: HttpRequest):
             'FilterOrderForm': filter_order,
             'stores': stores,
             'is_filter': is_filter,
-            'orders_for_report': orders_for_report,
-            'report_data': report_data,
+            # 'orders_for_report': orders_for_report,
+            # 'report_data': report_data,
 
             'store_name': store_name,
             'order_number': order_number,
@@ -272,6 +285,7 @@ def export_to_excel(request: HttpRequest):
         order_number = request.POST.get('order_number')
 
         from_date = request.POST.get('from_date')
+
         to_date = request.POST.get('to_date')
 
         shipping_method = request.POST.get('shipping_method')
@@ -284,8 +298,8 @@ def export_to_excel(request: HttpRequest):
             Q(is_delete=False),
             Q(store_id=store_id) if store_id else Q(),
             Q(order_number=order_number) if order_number else Q(),
-            # # Q(from_date__gte=from_date) if from_date else Q(),
-            # # Q(to_date__lte=to_date) if to_date else Q(),
+            # Q(date__gte=from_date) if from_date else Q(),
+            # Q(date__lte=to_date) if to_date else Q(),
             Q(shipping_method__fa_name=shipping_method) if shipping_method else Q(),
             Q(document_defects__contains=document_defects) if document_defects else Q(),
         )
