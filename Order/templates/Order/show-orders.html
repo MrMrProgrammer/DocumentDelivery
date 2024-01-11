@@ -22,7 +22,8 @@
                         <form action="{% url 'export_to_excel' %}" method="post">
                             {% csrf_token %}
 
-                            <div style="display: none;">
+                            <div>
+{#                                style="display: none;"#}
                                 <input type="text" name="store_name" value="{{ store_name }}">
                                 <input type="text" name="order_number" value="{{ order_number }}">
                                 <input type="text" name="from_date" value="{{ from_date }}">
