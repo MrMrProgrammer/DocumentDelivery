@@ -1,3 +1,18 @@
+var b = 1;
+jQuery(document).on('click', '.add-new-row', function (e) {
+    e.preventDefault();
+    b++;
+    let inner_row = jQuery('#order_number_inner_row');
+    if (b <= 10) {
+        inner_row.append('<br/><div class="row"><div class="col-6"><input type="text" name="order_number[' + b + ']" class="form-control" placeholder="شماره سفارش" id="id_order_number"></div> <div class="col-6"><input type="text" name="document_defects[' + b + ']" class="form-control" placeholder="نقص مدارک" id="id_document_defects"></div></div></div>');
+    } else {
+        alert('حداکثر تعداد ردیف‌ها به دست آمده است!');
+    }
+})
+
+jalaliDatepicker.startWatch();
+
+
 function show_stores() {
     search_btn = document.getElementById('myDropdown');
 
@@ -39,10 +54,7 @@ function add_to_input(store_name, store_id) {
     document.getElementById('myDropdown').style.display = 'none';
 
     document.getElementById('sub-btn').style.display = 'inline-block';
-    document.getElementById('sub-btn-again').style.display = 'inline-block';
-
     document.getElementById('unactive-sub-btn').style.display = 'none';
-    document.getElementById('unactive-sub-btn-again').style.display = 'none';
 }
 
 function remove_from_input() {
@@ -50,17 +62,7 @@ function remove_from_input() {
     document.getElementById('fake_store_id_input').value = '';
 
     document.getElementById('unactive-sub-btn').style.display = 'inline-block';
-    document.getElementById('unactive-sub-btn-again').style.display = 'inline-block';
-
     document.getElementById('sub-btn').style.display = 'none';
-    document.getElementById('sub-btn-again').style.display = 'none';
 }
 
-// ===============================================
 
-function report() {
-
-    $.get("/Order/export-to-excel").then(res => {
-        console.log("ok")
-    });
-}
