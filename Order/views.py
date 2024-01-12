@@ -41,6 +41,48 @@ def list_cleaner(input_list):
     return output
 
 
+def add_new_order(store, order_number, document_defects, shipping_method, date, time):
+    if store:
+        new_store = store
+    else:
+        new_store = None
+
+    if order_number:
+        new_order_number = order_number
+    else:
+        new_order_number = None
+
+    if document_defects:
+        new_document_defects = document_defects
+    else:
+        new_document_defects = None
+
+    if shipping_method:
+        new_shipping_method = shipping_method
+    else:
+        new_shipping_method = None
+
+    if date:
+        new_date = date
+    else:
+        new_date = None
+
+    if time:
+        new_time = time
+    else:
+        new_time = None
+
+    new_doc = Order(
+        store_id=new_store,
+        order_number=new_order_number,
+        document_defects=new_document_defects,
+        shipping_method=new_shipping_method,
+        date=new_date,
+        time=new_time,
+    )
+    new_doc.save()
+
+
 @method_decorator(login_required, name='dispatch')
 class GetDocument(View):
     def get(self, request):
@@ -60,7 +102,6 @@ class GetDocument(View):
 
         if register_form.is_valid():
             store = register_form.cleaned_data.get('store_name')
-            order_number = register_form.cleaned_data.get('order_number')
             shipping_method = register_form.cleaned_data.get('shipping_method')
             date = register_form.cleaned_data.get('date')
             time = register_form.cleaned_data.get('time')
@@ -70,55 +111,24 @@ class GetDocument(View):
             else:
                 date = jalali_to_gregorian(date)
 
-            if time == None:
+            if time is None:
                 time = datetime.datetime.now()
 
-            # order_number_list = []
-            order_number_list = order_number.split('/')
+            for i in range(1, 101):
+                if i == 1:
+                    order_number = request.POST.get('order_number')
+                    document_defects = request.POST.get('document_defects')
+                    if order_number or document_defects:
+                        add_new_order(store, order_number, document_defects, shipping_method, date, time)
+                        continue
 
-            clean_order_number_list = list_cleaner(order_number_list)
-
-            for order in clean_order_number_list:
-
-                if order.isdigit():
-
-                    new_doc = Order(
-                        store_id=store,
-                        order_number=order,
-                        shipping_method=shipping_method,
-                        date=date,
-                        time=time,
-                    )
-
-                    new_doc.save()
-
-                elif '-' in order:
-                    data = order.split('-')
-
-                    data = list_cleaner(data)
-
-                    if data[0].isdigit():
-                        new_doc = Order(
-                            store_id=store,
-                            order_number=data[0],
-                            shipping_method=shipping_method,
-                            date=date,
-                            time=time,
-                            document_defects=data[1]
-                        )
-
-                        new_doc.save()
-
+                order_number = request.POST.get(f'order_number[{i}]')
+                document_defects = request.POST.get(f'document_defects[{i}]')
+                if order_number or document_defects:
+                    add_new_order(store, order_number, document_defects, shipping_method, date, time)
                 else:
-                    new_doc = Order(
-                        store_id=store,
-                        shipping_method=shipping_method,
-                        document_defects=order,
-                        date=date,
-                        time=time,
-                    )
-
-                    new_doc.save()
+                    print(i)
+                    break
 
             return redirect('show-orders')
 
