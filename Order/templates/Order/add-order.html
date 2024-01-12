@@ -43,7 +43,7 @@
                                 نام فروشگاه
                             </button>
 
-                            <div id="myDropdown" class="dropdown-content">
+                            <div id="myDropdown" class="dropdown-content" style="display: none">
                                 <input type="text" placeholder="جستجو نام فروشگاه" id="myInput"
                                        onkeyup="filterFunction()">
 
@@ -58,15 +58,32 @@
                         </div>
                     </div>
 
-                    <br/>
+                    <hr/>
 
-                    <div class="row">
-                        <div class="col-12">
-                            {{ register_form.order_number }}
+                    <div class="row text-center">
+                        <div class="col-10" id="order_number_inner_row">
+                            <div class="row">
+                                <div class="col-6">
+                                    {{ register_form.order_number }}
+                                </div>
+
+                                <div class="col-6">
+                                    {{ register_form.document_defects }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-2">
+                            <a class="add-new-row">افزودن ردیف</a>
                         </div>
                     </div>
 
+
                     <br/>
+
+                    <br/>
+
+                    <hr/>
 
                     <div class="row">
                         <div class="col-4 text-right">
@@ -106,18 +123,15 @@
                     <br/>
 
                     <div class="row text-center">
-                        <div class="col-md-6">
+                        <div class="col-md-4"></div>
+
+                        <div class="col-md-4">
                             <button type="submit" class="btn btn-success btns" id="sub-btn">ذخیره</button>
                             <a class="btn btn-outline-secondary btns" id="unactive-sub-btn">ذخیره</a>
                         </div>
+
+                        <div class="col-md-4"></div>
                         <br/>
-                        <br/>
-                        <div class="col-md-6">
-                            <button type="submit" class="btn btn-primary btns" id="sub-btn-again">ذخیره و ایجاد دیگری
-                            </button>
-                            <a type="submit" class="btn btn-outline-secondary btns" id="unactive-sub-btn-again">ذخیره و ایجاد
-                                دیگری</a>
-                        </div>
 
                     </div>
 
@@ -129,8 +143,6 @@
         <div class="col-md-2"></div>
 
     </div>
-
-    <script>jalaliDatepicker.startWatch();</script>
 
 {% endblock %}
 
