@@ -18,13 +18,21 @@ class OrderForm(forms.Form):
     )
 
     order_number = forms.CharField(
-        label='شماره سفارش',
         required=False,
-        widget=forms.Textarea(attrs=
-        {
+        widget=forms.TextInput(attrs={
             'class': 'form-control',
-            'placeholder': 'شماره سفارش'
-        }),
+            'placeholder': 'شماره سفارش',
+            'autocomplete': "off",
+        })
+    )
+
+    document_defects = forms.CharField(
+        required=False,
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'نقص مدارک',
+            'autocomplete': "off",
+        })
     )
 
     shipping_method = forms.ModelChoiceField(
