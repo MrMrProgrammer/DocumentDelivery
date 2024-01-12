@@ -35,14 +35,25 @@ class OrderForm(forms.Form):
         }),
     )
 
-    # date = forms.CharField(
-    #     required=False,
-    #     widget=forms.Textarea(attrs=
-    #     {
-    #         'class': 'form-control',
-    #         'placeholder': 'تاریخ'
-    #     }),
-    # )
+    date = forms.CharField(
+        required=False,
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'تاریخ',
+            'data-jdp': 'data-jdp',
+            'autocomplete': "off",
+        })
+    )
+
+    time = forms.TimeField(
+        required=False,
+        widget=forms.TimeInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'ساعت',
+            'autocomplete': "off",
+            'type': 'time',
+        }),
+    )
 
 
 class UpdateOrderForm(forms.ModelForm):
