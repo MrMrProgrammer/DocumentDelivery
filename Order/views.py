@@ -1,19 +1,28 @@
-import datetime
-from django.db.models import Q
+# region Import Libraries
+
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 from django.shortcuts import render, redirect
+from django.db.models import Q
 from django.views import View
+
+from django.http import HttpResponse
+from django.http import HttpRequest
+
+from .forms import UpdateOrderForm, filterOrderForm
 from .forms import OrderForm
 from .models import Order
-from django.utils.decorators import method_decorator
-from django.contrib.auth.decorators import login_required
+
 from Store.models import Store
-from django.http import HttpRequest
-from .forms import UpdateOrderForm, filterOrderForm
-from django.http import HttpResponse
-import pandas as pd
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-import os
 from jalali_date import date2jalali
+
+import datetime
+import pandas as pd
+import os
+
+
+# endregion
 
 
 def jalali_to_gregorian(jalali_date):
@@ -59,13 +68,11 @@ class GetDocument(View):
 
             if date == None:
                 date = datetime.date.today()
-            #     .strftime('%Y-%M-%D')
 
             if time == None:
                 time = datetime.datetime.now()
-            #     .strftime('%H:%M')
 
-            order_number_list = []
+            # order_number_list = []
             order_number_list = order_number.split('/')
 
             clean_order_number_list = list_cleaner(order_number_list)
@@ -112,15 +119,6 @@ class GetDocument(View):
 
                     new_doc.save()
 
-            # new_doc = Order(
-            #     store_id=store,
-            #     order_number=order_number,
-            #     shipping_method=shipping_method,
-            #     description=description,
-            # )
-
-            # new_doc.save()
-
             return redirect('show-orders')
 
         context = {
@@ -135,11 +133,10 @@ def show_order(request):
     is_filter = False
 
     orders = Order.objects.filter(is_delete=False).order_by('-id')
-    orders_for_report = orders
 
     orders_len = len(orders)
 
-    stores = Store.objects.filter().all()
+    stores = Store.objects.all()
 
     filter_order = filterOrderForm(request.POST)
 
@@ -160,8 +157,6 @@ def show_order(request):
         'FilterOrderForm': filter_order,
         'stores': stores,
         'is_filter': is_filter,
-        'orders_for_report': orders_for_report,
-
         'orders_len': orders_len,
     }
 
@@ -232,15 +227,6 @@ def filter_orders(request: HttpRequest):
         shipping_method = filter_order.cleaned_data['shipping_method']
         document_defects = filter_order.cleaned_data['document_defects']
 
-        # report_data = {
-        #     'store_name': store_name,
-        #     'order_number': order_number,
-        #     'from_date': from_date,
-        #     'to_date': to_date,
-        #     'shipping_method': shipping_method,
-        #     'document_defects': document_defects,
-        # }
-
         orders = Order.objects.filter(
             Q(is_delete=False),
             Q(store_id=store_name) if store_name else Q(),
@@ -249,9 +235,7 @@ def filter_orders(request: HttpRequest):
             Q(date__lte=to_date) if to_date else Q(),
             Q(shipping_method=shipping_method) if shipping_method else Q(),
             Q(document_defects__contains=document_defects) if document_defects else Q(),
-        )
-
-        orders_for_report = orders
+        ).order_by('-id')
 
         orders_len = len(orders)
 
@@ -260,8 +244,6 @@ def filter_orders(request: HttpRequest):
             'FilterOrderForm': filter_order,
             'stores': stores,
             'is_filter': is_filter,
-            # 'orders_for_report': orders_for_report,
-            # 'report_data': report_data,
 
             'store_name': store_name,
             'order_number': order_number,
@@ -285,8 +267,10 @@ def export_to_excel(request: HttpRequest):
         order_number = request.POST.get('order_number')
 
         from_date = request.POST.get('from_date')
+        from_date = datetime.datetime.strptime(from_date, '%Y/%m/%d')
 
         to_date = request.POST.get('to_date')
+        to_date = datetime.datetime.strptime(to_date, '%Y/%m/%d')
 
         shipping_method = request.POST.get('shipping_method')
         if shipping_method == 'None':
@@ -298,11 +282,11 @@ def export_to_excel(request: HttpRequest):
             Q(is_delete=False),
             Q(store_id=store_id) if store_id else Q(),
             Q(order_number=order_number) if order_number else Q(),
-            # Q(date__gte=from_date) if from_date else Q(),
-            # Q(date__lte=to_date) if to_date else Q(),
+            Q(date__gte=from_date) if from_date else Q(),
+            Q(date__lte=to_date) if to_date else Q(),
             Q(shipping_method__fa_name=shipping_method) if shipping_method else Q(),
             Q(document_defects__contains=document_defects) if document_defects else Q(),
-        )
+        ).order_by('-id')
 
         print("Len : ", len(orders))
 
@@ -342,12 +326,10 @@ def export_to_excel(request: HttpRequest):
         if not os.path.exists(report_folder):
             os.makedirs(report_folder)
 
-        # excel_filename = os.path.join(report_folder, f"Report.xlsx")
         excel_filename = os.path.join("Report.xlsx")
 
         df.to_excel(excel_filename, index=False)
 
-        # Read the Excel file and send the response
         with open(excel_filename, 'rb') as excel_file:
             response = HttpResponse(excel_file.read(),
                                     content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
