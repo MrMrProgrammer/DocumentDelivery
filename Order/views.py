@@ -59,15 +59,16 @@ class GetDocument(View):
         register_form = OrderForm(request.POST)
 
         if register_form.is_valid():
-
             store = register_form.cleaned_data.get('store_name')
             order_number = register_form.cleaned_data.get('order_number')
             shipping_method = register_form.cleaned_data.get('shipping_method')
             date = register_form.cleaned_data.get('date')
             time = register_form.cleaned_data.get('time')
 
-            if date == None:
+            if date == '':
                 date = datetime.date.today()
+            else:
+                date = jalali_to_gregorian(date)
 
             if time == None:
                 time = datetime.datetime.now()
@@ -267,10 +268,12 @@ def export_to_excel(request: HttpRequest):
         order_number = request.POST.get('order_number')
 
         from_date = request.POST.get('from_date')
-        from_date = datetime.datetime.strptime(from_date, '%Y/%m/%d')
+        if from_date:
+            from_date = datetime.datetime.strptime(from_date, '%Y/%m/%d')
 
         to_date = request.POST.get('to_date')
-        to_date = datetime.datetime.strptime(to_date, '%Y/%m/%d')
+        if to_date:
+            to_date = datetime.datetime.strptime(to_date, '%Y/%m/%d')
 
         shipping_method = request.POST.get('shipping_method')
         if shipping_method == 'None':
