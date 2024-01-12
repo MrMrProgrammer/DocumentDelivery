@@ -22,12 +22,11 @@
                         <form action="{% url 'export_to_excel' %}" method="post">
                             {% csrf_token %}
 
-                            <div>
-{#                                style="display: none;"#}
+                            <div style="display: none;">
                                 <input type="text" name="store_name" value="{{ store_name }}">
                                 <input type="text" name="order_number" value="{{ order_number }}">
-                                <input type="text" name="from_date" value="{{ from_date }}">
-                                <input type="text" name="to_date" value="{{ to_date }}">
+                                <input type="text" name="from_date" value="{{ from_date|date:"Y/m/d" }}">
+                                <input type="text" name="to_date" value="{{ to_date|date:"Y/m/d" }}">
                                 <input type="text" name="shipping_method" value="{{ shipping_method }}">
                                 <input type="text" name="document_defects" value="{{ document_defects }}">
                             </div>
