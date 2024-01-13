@@ -17,9 +17,9 @@ class OrderForm(forms.Form):
         }),
     )
 
-    order_number = forms.CharField(
+    order_number = forms.IntegerField(
         required=False,
-        widget=forms.TextInput(attrs={
+        widget=forms.NumberInput(attrs={
             'class': 'form-control',
             'placeholder': 'شماره سفارش',
             'autocomplete': "off",
@@ -67,17 +67,13 @@ class OrderForm(forms.Form):
 class UpdateOrderForm(forms.ModelForm):
     class Meta:
         model = Order
-        fields = ['order_number', 'shipping_method', 'document_defects', 'date', 'time']
+        # fields = ['store', 'order_number', 'document_defects', 'shipping_method', 'date', 'time']
+        fields = ['order_number', 'document_defects', 'shipping_method']
 
         widgets = {
             'order_number': forms.NumberInput(attrs={
                 'class': 'form-control',
-                'placeholder': 'قیمت'
-            }),
-            'shipping_method': forms.Select(attrs={
-                'class': 'form-control',
-                'placeholder': 'روش ارسال',
-
+                'placeholder': 'شماره سفارش'
             }),
 
             'document_defects': forms.TextInput(attrs={
@@ -85,17 +81,32 @@ class UpdateOrderForm(forms.ModelForm):
                 'placeholder': 'نقص مدارک',
             }),
 
-            'date': forms.DateInput(attrs={
+            'shipping_method': forms.Select(attrs={
                 'class': 'form-control',
-                'placeholder': 'تاریخ',
+                'placeholder': 'روش ارسال',
+                'required': True,
             }),
-
-            'time': forms.TextInput(attrs={
-                'class': 'form-control',
-                'placeholder': 'ساعت',
-            }),
+            #
+            #
+            # 'date': forms.TextInput(attrs={
+            #     'class': 'form-control',
+            #     'placeholder': 'تاریخ',
+            #     'data-jdp': 'data-jdp',
+            #     'autocomplete': "off",
+            # }),
+            #
+            # 'time': forms.TimeInput(attrs={
+            #     'class': 'form-control',
+            #     'placeholder': 'ساعت',
+            # }),
 
         }
+        #
+        # labels = {
+        #     'order_number': 'شماره سفارش',
+        #     'document_defects': 'نقص مدارک',
+        #     'shipping_method': 'روش ارسال',
+        # }
 
 
 class filterOrderForm(forms.Form):
