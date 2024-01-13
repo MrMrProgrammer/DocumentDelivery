@@ -190,22 +190,24 @@ class UpdateOrderView(View):
 
         return render(request, 'Order/update-order.html', context)
 
-    # def post(self, request: HttpRequest, order_id):
-    #
-    #     current_food: FoodsModel = FoodsModel.objects.filter(id=food_id).first()
-    #
-    #     edit_form = UpdateFoodForm(request.POST, request.FILES, instance=current_food)
-    #
-    #     if edit_form.is_valid():
-    #         edit_form.save(commit=True)
-    #
-    #         return redirect('PerMomFoodsList')
-    #
-    #     context = {
-    #         'edit_form': edit_form,
-    #     }
-    #
-    #     return render(request, 'Food/UpdateFood.html', context)
+    def post(self, request: HttpRequest, order_id):
+        current_order: Order = Order.objects.filter(id=order_id).first()
+
+        edit_form = UpdateOrderForm(request.POST, instance=current_order)
+
+        print("here ?")
+
+        if edit_form.is_valid():
+            print("is valid ?")
+            edit_form.save(commit=True)
+
+            return redirect('show-orders')
+
+        context = {
+            'edit_form': edit_form,
+        }
+
+        return render(request, 'Order/show-orders.html', context)
 
 
 @login_required
