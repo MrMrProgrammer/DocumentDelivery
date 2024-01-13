@@ -3,11 +3,7 @@ jQuery(document).on('click', '.add-new-row', function (e) {
     e.preventDefault();
     b++;
     let inner_row = jQuery('#order_number_inner_row');
-    if (b <= 10) {
-        inner_row.append('<br/><div class="row"><div class="col-6"><input type="text" name="order_number[' + b + ']" class="form-control" placeholder="شماره سفارش" id="id_order_number"></div> <div class="col-6"><input type="text" name="document_defects[' + b + ']" class="form-control" placeholder="نقص مدارک" id="id_document_defects"></div></div></div>');
-    } else {
-        alert('حداکثر تعداد ردیف‌ها به دست آمده است!');
-    }
+    inner_row.append('<br/><div class="row"><div class="col-6"><input type="text" name="order_number[' + b + ']" class="form-control" placeholder="شماره سفارش" id="id_order_number"></div> <div class="col-6"><input type="text" name="document_defects[' + b + ']" class="form-control" placeholder="نقص مدارک" id="id_document_defects"></div></div></div>');
 })
 
 jalaliDatepicker.startWatch();
