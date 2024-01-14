@@ -9,26 +9,58 @@
 
 {% block mian %}
 
-    <br/>
-    <br/>
-
     <div class="row">
 
         <div class="col-md-12 text-right">
 
-            <h2>سلام {% if request.user.is_staff %}آقای{% else %}خانم{% endif %} {{ request.user.last_name }}</h2>
-
-            <br/>
-
-            <h4>امروز، <span class="text-success">{{ date|date:'l' }}</span> (<span dir="rtl">{{ today_date }}</span>)</h4>
+            <h4>امروز، <span class="text-success">{{ date|date:'l' }}</span> (<span dir="rtl">{{ today_date }}</span>)
+            </h4>
 
             <br/>
             <br/>
 
         </div>
 
+    </div>
 
+    <div class="row text-center">
 
+        <div class="col-12">
+
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+
+            <h2>آمار تحویل مدارک در هفته گذشته</h2>
+
+            <canvas id="myChart_2" style="width:100%;max-width:100%;max-height: 500px;"></canvas>
+
+            <script>
+                var xValues = ["شنبه", "یک شنبه", "دوشنبه", "سه شنبه", "چهار شنبه"];
+                var yValues = {{ yValues }};
+                var barColors = ["red", "green", "blue", "orange", "brown"];
+
+                new Chart("myChart_2", {
+                    type: "bar",
+                    data: {
+                        labels: xValues,
+                        datasets: [{
+                            backgroundColor: barColors,
+                            data: yValues
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true,
+                                    stepSize: 1,
+                                }
+                            }]
+                        },
+                        legend: {display: false},
+                    }
+                });
+            </script>
+        </div>
     </div>
 
 {% endblock %}
