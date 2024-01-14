@@ -1,12 +1,9 @@
-from urllib import request
-from datetime import datetime, timedelta
-from django.db.models import Count
+from datetime import timedelta
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from jalali_date import datetime2jalali
 from datetime import datetime, timezone
 from Order.models import Order
-from django.db.models import Q
 
 
 def chart_date(start_date, end_date):
@@ -98,10 +95,14 @@ def home(request):
 
         yValues = chart_date(start_date, end_date)
 
+    start_date = datetime2jalali().strftime('%Y-%m-%d')
+
     context = {
         'today_date': today_date,
         'date': date,
         'yValues': yValues,
+        'start_date': start_date,
+        'end_date': end_date,
     }
 
     return render(request, 'SiteSetting/home.html', context)

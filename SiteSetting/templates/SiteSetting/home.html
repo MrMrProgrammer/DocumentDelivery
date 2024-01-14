@@ -1,5 +1,6 @@
 {% extends 'base/layout.html' %}
 {% load static %}
+{% load jformat %}
 
 {% block header-link %}
     <link rel="stylesheet" href="{% static 'css/home-style.css' %}"/>
@@ -29,7 +30,7 @@
 
             <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 
-            <h2>آمار تحویل مدارک در هفته گذشته</h2>
+            <h2>آمار تحویل مدارک در هفته گذشته( {{ end_date|jformat:"%d / %m / %Y" }} - {{ start_date|jformat:"%d / %m / %Y" }} )</h2>
 
             <canvas id="myChart_2" style="width:100%;max-width:100%;max-height: 500px;"></canvas>
 
