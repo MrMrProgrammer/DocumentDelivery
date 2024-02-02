@@ -95,7 +95,7 @@ def home(request):
 
         yValues = chart_date(start_date, end_date)
 
-    start_date = datetime2jalali().strftime('%Y-%m-%d')
+    # start_date = datetime2jalali().strftime('%Y-%m-%d')
 
     context = {
         'today_date': today_date,
