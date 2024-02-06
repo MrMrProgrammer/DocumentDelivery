@@ -106,4 +106,3 @@ def home(request):
     }
 
     return render(request, 'SiteSetting/home.html', context)
-    
